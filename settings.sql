@@ -1,0 +1,3 @@
+CREATE DATABASE cached;
+CREATE USER cacheduser WITH PASSWORD 'cached';
+GRANT ALL PRIVILEGES ON DATABASE cached TO cacheduser;
