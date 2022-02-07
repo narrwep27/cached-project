@@ -17,9 +17,12 @@ Cached: a budgeting app to help keep track of your expenses and reach your savin
 **Planning Links:**
 
 - [Trello Board](https://trello.com/b/IhtXefM2)
-- Entity Relationship Diagram:
+- Entity Relationship Diagram:  
+
 ![ERD](./images/ERD.jpg)
-- Component Hierarchy Diagram:
+
+- Component Hierarchy Diagram:  
+
 ![CHD](./images/CHD.jpg)
 
 ***
