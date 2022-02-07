@@ -14,6 +14,10 @@ Cached: a budgeting app to help keep track of your expenses and reach your savin
 
 **Note:** This project is still in development and being updated.
 
+***
+
+### **Getting Started:**
+
 **Planning Links & Attachments:**
 
 - [Trello Board](https://trello.com/b/IhtXefM2)
@@ -24,6 +28,8 @@ Cached: a budgeting app to help keep track of your expenses and reach your savin
 - Component Hierarchy Diagram:  
 
 ![CHD](./images/CHD.jpg)
+
+- Deployed Heroku Link:
 
 ***
 
