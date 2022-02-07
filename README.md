@@ -1,10 +1,10 @@
 # cached-project
 
-### **Date:** February 7, 2022
+## **Date:** February 7, 2022
 
-### **Author:** Narrwe Park
+## **Author:** Narrwe Park
 
-#### Contact Links: [LinkedIn](https://www.linkedin.com/in/narrwe-park/) | [GitHub](https://github.com/narrwep27)
+### Contact Links: [LinkedIn](https://www.linkedin.com/in/narrwe-park/) | [GitHub](https://github.com/narrwep27)
 
 ***
 
@@ -14,7 +14,7 @@ Cached: a budgeting app to help keep track of your expenses and reach your savin
 
 **Note:** This project is still in development and being updated.
 
-**Planning Links:**
+**Planning Links & Attachments:**
 
 - [Trello Board](https://trello.com/b/IhtXefM2)
 - Entity Relationship Diagram:  
