@@ -20,7 +20,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-l@%lj&zk8^a$bi44nb85&a&l3dr^3(g2^odjw&9vpj0p%nd=zi'
+SECRET_KEY = 'django-insecure-)fdf^fp$=45c241g!p72o6a%66*w&-r4353d015t^e3hd$m1^#'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -31,15 +31,6 @@ CORS_ALLOWED_ORIGINS = [
     'http://localhost:8000',
     'http://localhost:8080',
 ]
-
-REST_FRAMEWORK = {
-    'DEFAULT_AUTHENTICATION_CLASSES': (
-        'rest_framework.authentication.TokenAuthentication',
-    ),
-    'DEFAULT_PERMISSION_CLASSES': [
-        'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
-    ]
-}
 # Application definition
 
 INSTALLED_APPS = [
@@ -52,14 +43,13 @@ INSTALLED_APPS = [
     'cached',
     'rest_framework',
     'rest_framework.authtoken',
-    'djoser',
-    'corsheaders',
+    'rest_framework_simplejwt',
+    'corsheaders'
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
-    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -86,6 +76,17 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'cached_django.wsgi.application'
+
+
+# Rest framework
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ),
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly',
+    )
+}
 
 
 # Database
