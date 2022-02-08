@@ -9,6 +9,7 @@ psycopg2-binary = "*"
 djangorestframework = "*"
 djoser = "*"
 django-cors-headers = "*"
+djangorestframework-simplejwt = "*"
 
 [dev-packages]
 

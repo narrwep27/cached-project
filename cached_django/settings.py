@@ -34,7 +34,7 @@ CORS_ALLOWED_ORIGINS = [
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
-        'rest_framework.authentication.TokenAuthentication',
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
     ),
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
@@ -52,7 +52,7 @@ INSTALLED_APPS = [
     'cached',
     'rest_framework',
     'rest_framework.authtoken',
-    'djoser',
+    'rest_framework_simplejwt',
     'corsheaders',
 ]
 

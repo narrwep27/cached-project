@@ -4,7 +4,7 @@ from django.db import models
 class User(models.Model):
     username = models.CharField(max_length=50)
     email = models.EmailField()
-    password = models.TextField()
+    passwordDigest = models.TextField()
     createdAt = models.DateTimeField(auto_now_add=True)
     modifiedAt = models.DateTimeField(auto_now=True)
     def __str__(self):
