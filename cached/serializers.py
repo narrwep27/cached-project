@@ -6,8 +6,12 @@ class CustomUserSerializer(serializers.ModelSerializer):
     class Meta:
         model = CustomUser
         fields = ('id', 'email', 'is_superuser', 'is_staff', 'expenses', 'tags', 'goals')
+        depth = 1
 
 class TagSerializer(serializers.ModelSerializer):
+    user = serializers.SerializerMethodField()
+    def get_user(self, obj):
+        return self.context.get('user_id')
     class Meta:
         model = Tag
         fields = ('id', 'name', 'user', 'expenses')
