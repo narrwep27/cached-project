@@ -41,7 +41,12 @@ class Goal(models.Model):
     goal = models.DecimalField(max_digits=15, decimal_places=2)
     description = models.CharField(max_length=300, blank=True, null=True)
     month = models.DateField()
-    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name='goals')
+    user_identifier = models.IntegerField(unique_for_date='month', null=True)
+    user = models.ForeignKey(
+        CustomUser, 
+        on_delete=models.CASCADE, 
+        related_name='goals'
+    )
     createdAt = models.DateTimeField(auto_now_add=True)
     updatedAt = models.DateTimeField(auto_now=True)
     def __str__(self):
