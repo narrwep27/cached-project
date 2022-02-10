@@ -1,7 +1,6 @@
 <template>
     <div class="signup-comp">
-        <h1>cached.</h1>
-        <form class="signup-form">
+        <form v-on:submit.prevent='handleSubmit' class="signup-form">
             <h2>Signup Here</h2>
             <label>Email:</label>
             <input type="email" placeholder="email" v-model="email" />
@@ -9,12 +8,31 @@
             <input type="password" placeholder="password" v-model="password" />
             <label>Re-enter password:</label>
             <input type="password" placeholder="Re-enter password" v-model="reEntry" />
+            <div class="password-check" v-if='!password && !reEntry'>
+                <CheckboxBlankCircleOutline />
+                <p>Passwords must match</p>
+            </div>
+            <div v-else>
+                <div class="password-check match" v-if="password === reEntry">
+                    <CheckCircleOutline />
+                    <p>Passwords must match</p>
+                </div>
+                <div class="password-check mismatch" v-else>
+                    <AlertCircleOutline />
+                    <p>Passwords must match</p>
+                </div>
+            </div>
             <button type="submit">Sign Up!</button>
+            <a href=''>Or <b>Login</b> if you already have an account</a>
         </form>
     </div>
 </template>
 
 <script>
+import CheckCircleOutline from 'vue-material-design-icons/CheckCircleOutline.vue';
+import AlertCircleOutline from 'vue-material-design-icons/AlertCircleOutline.vue';
+import CheckboxBlankCircleOutline from 'vue-material-design-icons/CheckboxBlankCircleOutline.vue';
+
 export default {
     name: 'Signup',
     data: () => ({
@@ -22,27 +40,52 @@ export default {
         password: '',
         reEntry: ''
     }),
+    components: {
+        CheckCircleOutline,
+        AlertCircleOutline,
+        CheckboxBlankCircleOutline
+    },
     methods: {
-        handleSubmit() {}
+        handleSubmit() {
+            if (this.email && this.password && this.reEntry) {
+                console.log('all fields filled');
+                if (this.password === this.reEntry) {
+                    console.log('passwords match');
+                } else {
+                    console.log('passwords do NOT match');
+                }
+            } else {
+                console.log('all fields must be filled');
+            }
+        }
     }
 }
 </script>
 
 <style scoped>
     .signup-form {
-        display: flex;
-        flex-direction: column;
-        margin: 0 auto;
-        padding: 1.5em;
         width: 30%;
-        border: 1px solid black;
-        border-radius: 1em;
     }
-    .signup-form label {
-        text-align: left;
+    .signup-form h2 {
+        margin-top: 0;
     }
     .signup-form button {
         margin: 1em auto;
         width: 60%;
+    }
+    .password-check {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 5px;
+        text-decoration: underline;
+    }
+    .password-check.match {
+        text-decoration: underline;
+        color: green;
+    }
+    .password-check.mismatch {
+        text-decoration: underline;
+        color: red;
     }
 </style>

@@ -1,5 +1,7 @@
 <template>
   <div>
+    <h1>Cached.</h1>
+    <h3>The budgeting tool</h3>
     <router-view></router-view>
   </div>
 </template>
@@ -19,7 +21,17 @@ export default {
     -moz-osx-font-smoothing: grayscale;
     text-align: center;
     color: #2c3e50;
-    margin-top: 60px;
+  }
+  form {
+    display: flex;
+    flex-direction: column;
+    margin: 0 auto;
+    padding: 1.5em;
+    border: 1px solid black;
+    border-radius: 1em;
+  }
+  form label {
+    text-align: left;
   }
   button {
     cursor: pointer;
@@ -48,5 +60,11 @@ export default {
   }
   input::placeholder {
     font-size: 14px;
+  }
+  a {
+    color: black
+  }
+  a:visited {
+    color: black;
   }
 </style>
