@@ -1,30 +1,5 @@
-from dataclasses import fields
 from rest_framework import serializers
 from .models import CustomUser, Expense, Tag, Goal
-
-class CustomUserSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = CustomUser
-        fields = ('id', 'email', 'is_superuser', 'is_staff', 'expenses', 'tags', 'goals')
-        depth = 1
-
-class TagSerializer(serializers.ModelSerializer):
-    user = serializers.SerializerMethodField()
-    def get_user(self, obj):
-        return self.context.get('user_id')
-    class Meta:
-        model = Tag
-        fields = ('id', 'name', 'user', 'expenses')
-
-class ExpenseSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Expense
-        fields = ('id', 'cost', 'date', 'note', 'user', 'tag')
-
-class GoalSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Goal
-        fields = ('id', 'goal', 'description', 'month', 'user')
 
 class RegisterUserSerializer(serializers.ModelSerializer):
     class Meta:
@@ -38,3 +13,53 @@ class RegisterUserSerializer(serializers.ModelSerializer):
             instance.set_password(password)
         instance.save()
         return instance
+
+class CustomUserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = CustomUser
+        fields = ('id', 'email', 'is_superuser', 'expenses', 'tags', 'goals')
+        depth = 1
+
+# class CreateTagSerializer(serializers.ModelSerializer):
+    # context = serializers.SerializerMethodField()
+    # def get_context(self, obj):
+    #     return self.context.get('user_id')
+    # user_id = serializers.PrimaryKeyRelatedField(
+    #     queryset = CustomUser.objects.all(),
+    #     many = False
+    # )
+    # class Meta:
+    #     model = Tag
+    #     fields = ('id', 'name', 'user_id', 'expenses')
+
+class TagSerializer(serializers.ModelSerializer):
+    user = serializers.PrimaryKeyRelatedField(
+        queryset = CustomUser.objects.all(),
+        many = False
+    )
+    class Meta:
+        model = Tag
+        fields = '__all__'
+
+class ExpenseSerializer(serializers.ModelSerializer):
+    user = serializers.PrimaryKeyRelatedField(
+        queryset = CustomUser.objects.all(),
+        many = False
+    )
+    tag = serializers.PrimaryKeyRelatedField(
+        queryset = Tag.objects.all(),
+        many = False
+    )
+    class Meta:
+        model = Expense
+        fields = '__all__'
+
+class UpdateDestroyExpenseSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Expense
+        fields = ('id', 'cost', 'date', 'note', 'user', 'tag')
+
+class UpdateDestroyGoalSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Goal
+        fields = ('id', 'goal', 'description', 'month', 'user')
