@@ -17,3 +17,12 @@ export const Login = async (userInfo) => {
         throw error;
     }
 };
+
+export const LoadUser = async (uesrId) => {
+    try {
+        const res = await Client.get(`user/read/${userId}`)
+        return res.data;
+    } catch (error) {
+        throw error;
+    }
+};
