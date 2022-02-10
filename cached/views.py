@@ -5,10 +5,12 @@ from rest_framework.permissions import AllowAny, IsAdminUser
 from rest_framework.response import Response
 from .models import CustomUser, Tag, Expense, Goal
 from .serializers import (
+    GoalSerializer,
     RegisterUserSerializer,
     CustomUserSerializer, 
     TagSerializer, 
     ExpenseSerializer,
+    GoalSerializer
 )
 
 # Read only views using serializers
@@ -62,3 +64,15 @@ class CreateExpense(generics.CreateAPIView):
     #     self.perform_create(serializer)
     #     headers = self.get_success_headers(serializer.data)
     #     return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
+
+class UpdateDestroyExpense(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Expense.objects.all()
+    serializer_class = ExpenseSerializer
+
+class CreateGoal(generics.CreateAPIView):
+    queryset = Goal.objects.all()
+    serializer_class = GoalSerializer
+
+class UpdateDestroyGoal(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Goal.objects.all()
+    serializer_class = GoalSerializer

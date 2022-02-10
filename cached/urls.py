@@ -6,6 +6,9 @@ urlpatterns = [
     path('listusers', views.ListUsers.as_view(), name='read_user_list'),
     path('user/<int:pk>', views.RetrieveUser.as_view(), name='read_user'),
     path('tag/create', views.CreateTag.as_view(), name='create_tag'),
-    path('tag/update/<int:pk>', views.UpdateDestroyTag.as_view(), name='update_destroy_tag'),
-    path('expense/create', views.CreateExpense.as_view(), name='create_expense')
+    path('tag/update/<int:pk>', views.UpdateDestroyTag.as_view(), name='update_tag'),
+    path('expense/create', views.CreateExpense.as_view(), name='create_expense'),
+    path('expense/update/<int:pk>', views.UpdateDestroyExpense.as_view(), name='update_expense'),
+    path('goal/create', views.CreateGoal.as_view(), name='create_goal'),
+    path('goal/update/<int:pk>', views.UpdateDestroyGoal.as_view(), name='update_goal'),
 ]

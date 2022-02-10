@@ -54,12 +54,11 @@ class ExpenseSerializer(serializers.ModelSerializer):
         model = Expense
         fields = '__all__'
 
-class UpdateDestroyExpenseSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Expense
-        fields = ('id', 'cost', 'date', 'note', 'user', 'tag')
-
-class UpdateDestroyGoalSerializer(serializers.ModelSerializer):
+class GoalSerializer(serializers.ModelSerializer):
+    user = serializers.PrimaryKeyRelatedField(
+        queryset = CustomUser.objects.all(),
+        many = False
+    )
     class Meta:
         model = Goal
-        fields = ('id', 'goal', 'description', 'month', 'user')
+        fields = '__all__'
