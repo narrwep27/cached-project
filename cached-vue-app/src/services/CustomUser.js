@@ -17,7 +17,7 @@ export const Login = async (userInfo) => {
         const res = await Client.post('login', userInfo);
         localStorage.setItem('accessToken', res.data.access);
         localStorage.setItem('refreshToken', res.data.refresh);
-        localStorage.setItem('user_id', res.data.user_id);
+        localStorage.setItem('userId', res.data.user_id);
         Client.interceptors.request.use((config) => {
             const token = localStorage.getItem('accessToken')
             if (token) {
