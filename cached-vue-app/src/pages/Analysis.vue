@@ -1,5 +1,5 @@
 <template>
-    <div class="analysis-comp">
+    <div class="page analysis-comp">
         <h2>Analysis Page</h2>
     </div>
 </template>

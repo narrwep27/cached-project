@@ -9,6 +9,10 @@ const store = createStore({
         setUser(state, payload) {
             state.user = payload.userId;
             state.auth = payload.auth;
+        },
+        clearUser(state) {
+            state.user = null,
+            state.auth = false
         }
     },
     actions: {},

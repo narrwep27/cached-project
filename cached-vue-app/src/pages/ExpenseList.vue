@@ -1,5 +1,5 @@
 <template>
-    <div class="expense-list-comp">
+    <div class="page expense-list-comp">
         <h2>Expense List Page</h2>
     </div>
 </template>

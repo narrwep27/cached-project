@@ -1,5 +1,5 @@
 <template>
-    <div class="goal-comp">
+    <div class="page goal-comp">
         <h2>Goal Page</h2>
     </div>
 </template>

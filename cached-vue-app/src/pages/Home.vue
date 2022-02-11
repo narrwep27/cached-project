@@ -1,5 +1,5 @@
 <template>
-    <div class="home-comp">
+    <div class="page home-comp">
         <div>
             <Signup v-if="formState === 'signup'" v-on:toggleForm="toggleForm" />
             <Login v-else-if="formState === 'login'" v-on:toggleForm="toggleForm" />
