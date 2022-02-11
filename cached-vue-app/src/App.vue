@@ -3,13 +3,14 @@
     <h1>Cached.</h1>
     <h3>The budgeting tool</h3>
     <router-view></router-view>
+    <Vue3Snackbar bottom right :duration="6500"></Vue3Snackbar>
   </div>
 </template>
 
 <script>
 
 export default {
-  name: 'App'
+  name: 'App',
 }
 </script>
 

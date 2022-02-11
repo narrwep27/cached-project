@@ -1,6 +1,6 @@
 <template>
     <div class="login-comp">
-        <form class="login-form">
+        <form class="login-form" v-on:submit.prevent="handleLogin">
             <h2>Log in here</h2>
             <label>Email:</label>
             <input type="email" placeholder="Email" v-model="email" />
@@ -23,7 +23,9 @@ export default {
         email: '',
         password: ''
     }),
-    methods: {}
+    methods: {
+        handleLogin() {}
+    }
 }
 </script>
 

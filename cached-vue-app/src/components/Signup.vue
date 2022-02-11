@@ -52,15 +52,35 @@ export default {
     methods: {
         handleSubmit() {
             if (this.email && this.password && this.reEntry) {
-                console.log('all fields filled');
                 if (this.password === this.reEntry) {
-                    console.log('passwords match');
+                    this.successSignup();
                 } else {
-                    console.log('passwords do NOT match');
+                    this.errorMismatch();
                 }
             } else {
-                console.log('all fields must be filled');
+                this.errorMissingFields();
             }
+        },
+        successSignup() {
+            this.$snackbar.add({
+                type: 'success',
+                title: 'Signed up!',
+                text: 'Please, log in to access your account'
+            })
+        },
+        errorMissingFields() {
+            this.$snackbar.add({
+                type: 'error',
+                title: 'Error',
+                text: 'All fields must be filled'
+            })
+        },
+        errorMismatch() {
+            this.$snackbar.add({
+                type: 'error',
+                title: 'Error',
+                text: 'Passwords do not match'
+            })
         }
     }
 }
