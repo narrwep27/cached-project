@@ -1,7 +1,9 @@
 <template>
-    <div>
-        <Signup v-if="formState === 'signup'" v-on:toggleForm="toggleForm" />
-        <Login v-else-if="formState === 'login'" v-on:toggleForm="toggleForm" />
+    <div class="home-comp">
+        <div>
+            <Signup v-if="formState === 'signup'" v-on:toggleForm="toggleForm" />
+            <Login v-else-if="formState === 'login'" v-on:toggleForm="toggleForm" />
+        </div>
     </div>
 </template>
 
@@ -13,7 +15,7 @@ export default {
     name: 'Home',
     components: { Signup, Login },
     data: () => ({
-        formState: 'signup'
+        formState: 'signup',
     }),
     methods: {
         toggleForm() {

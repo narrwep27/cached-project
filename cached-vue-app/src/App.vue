@@ -1,14 +1,35 @@
 <template>
   <div>
+    <Nav v-if="$store.state.auth && $store.state.user" />
     <router-view></router-view>
-    <Vue3Snackbar bottom right :duration="6500"></Vue3Snackbar>
+    <Vue3Snackbar bottom right :duration="6500" />
   </div>
 </template>
 
 <script>
+import { VerifyToken } from './services/CustomUser';
+import Nav from './components/Nav.vue';
 
 export default {
   name: 'App',
+  components: { Nav },
+  data: () => ({}),
+  async mounted() {
+    await this.checkUser();
+  },
+  methods: {
+    async checkUser() {
+      if (localStorage.getItem('accessToken')) {
+        const res = await VerifyToken(localStorage.getItem('accessToken'));
+        if (res.status === 200) {
+          this.$store.commit('setUser', {
+            userId: localStorage.getItem('user_id'),
+            auth: true
+          });
+        }
+      }
+    },
+  }
 }
 </script>
 

@@ -4,7 +4,7 @@ import About from './pages/About.vue';
 import NotFound from './pages/NotFound.vue';
 
 const routes = [
-    { path: '/', component: Home, name: 'Home' },
+    { path: '/home', component: Home, name: 'Home' },
     { path: '/about', component: About, name: 'About' },
     { path: '/:catchAll(.*)', component: NotFound, name: 'NotFound' }
 ]
