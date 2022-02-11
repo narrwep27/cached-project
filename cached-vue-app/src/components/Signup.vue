@@ -56,11 +56,17 @@ export default {
         async handleSubmit() {
             if (this.email && this.password && this.reEntry) {
                 if (this.password === this.reEntry) {
-                    const newUser = {email: this.email, password: this.password}
-                    await Register(newUser)
-                    // this.successSignup();
-                    // this.$emit('toggleForm');
-                    // console.log(newUser)
+                    const res = await Register({
+                        email: this.email, 
+                        password:this.password
+                    })
+                    console.log(res)
+                    if (res.email) {
+                        this.successSignup();
+                        this.$emit('toggleForm');
+                    } else {
+                        this.errorUserExists()
+                    }
                 } else {
                     this.errorMismatch();
                 }
@@ -84,6 +90,12 @@ export default {
             this.$snackbar.add({
                 type: 'error',
                 text: 'Passwords do not match'
+            })
+        },
+        errorUserExists() {
+            this.$snackbar.add({
+                type: 'error',
+                text: 'A user with this email already exists'
             })
         }
     }
