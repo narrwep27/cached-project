@@ -1,7 +1,13 @@
 <template>
     <div>
-        <Signup v-if="formState === 'signup'" />
-        <Login v-else-if="formState === 'login'" />
+        <Signup 
+            v-if="formState === 'signup'" 
+            v-on:toggleForm="toggleForm"
+        />
+        <Login 
+            v-else-if="formState === 'login'" 
+            v-on:toggleForm="toggleForm"
+        />
     </div>
 </template>
 
@@ -16,7 +22,11 @@ export default {
         formState: 'signup'
     }),
     methods: {
-        toggleForm() {}
+        toggleForm() {
+            this.formState === 'signup' 
+                ? this.formState = 'login' 
+                : this.formState = 'signup'
+        }
     }
 }
 </script>

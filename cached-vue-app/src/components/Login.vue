@@ -1,11 +1,41 @@
 <template>
-    <div>
-        <h1>Login Component</h1>
+    <div class="login-comp">
+        <form class="login-form">
+            <h2>Log in here</h2>
+            <label>Email:</label>
+            <input type="email" placeholder="Email" v-model="email" />
+            <label>Password:</label>
+            <input type="password" placeholder="Password" v-model="password" />
+            <button>Log in!</button>
+            <a
+                v-on:click.prevent="$emit('toggleForm')" 
+                href="">
+                Or <b>Sign up</b> if you want to make a new account
+            </a>
+        </form>
     </div>
 </template>
 
 <script>
 export default {
-    name: 'Login'
+    name: 'Login',
+    data: () => ({
+        email: '',
+        password: ''
+    }),
+    methods: {}
 }
 </script>
+
+<style scoped>
+    .login-form {
+        width: 30%;
+    }
+    .login-form h2 {
+        margin-top: 0;
+    }
+    .login-form button {
+        margin: 1em auto;
+        width: 60%;
+    }
+</style>

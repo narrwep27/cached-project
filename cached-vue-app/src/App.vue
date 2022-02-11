@@ -9,18 +9,24 @@
 <script>
 
 export default {
-  name: 'App',
-  components: {}
+  name: 'App'
 }
 </script>
 
 <style>
+  body {
+    margin: 0;
+    padding: 0 0 2em 0;
+    background-image: url('./assets/18410.jpg');
+    background-size:cover;
+  }
   #app {
     font-family: Avenir, Helvetica, Arial, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-align: center;
     color: #2c3e50;
+    margin: 0;
   }
   form {
     display: flex;
@@ -29,6 +35,7 @@ export default {
     padding: 1.5em;
     border: 1px solid black;
     border-radius: 1em;
+    background-color: white;
   }
   form label {
     text-align: left;

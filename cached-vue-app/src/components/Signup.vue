@@ -1,11 +1,11 @@
 <template>
     <div class="signup-comp">
         <form v-on:submit.prevent='handleSubmit' class="signup-form">
-            <h2>Signup Here</h2>
+            <h2>Sign up here</h2>
             <label>Email:</label>
-            <input type="email" placeholder="email" v-model="email" />
+            <input type="email" placeholder="Email" v-model="email" />
             <label>Password:</label>
-            <input type="password" placeholder="password" v-model="password" />
+            <input type="password" placeholder="Password" v-model="password" />
             <label>Re-enter password:</label>
             <input type="password" placeholder="Re-enter password" v-model="reEntry" />
             <div class="password-check" v-if='!password && !reEntry'>
@@ -23,7 +23,11 @@
                 </div>
             </div>
             <button type="submit">Sign Up!</button>
-            <a href=''>Or <b>Login</b> if you already have an account</a>
+            <a 
+                v-on:click.prevent="$emit('toggleForm')" 
+                href=''>
+                Or <b>Login</b> if you already have an account
+            </a>
         </form>
     </div>
 </template>
