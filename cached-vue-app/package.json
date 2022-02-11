@@ -11,7 +11,9 @@
     "axios": "^0.25.0",
     "core-js": "^3.6.5",
     "vue": "^3.0.0",
-    "vue-router": "^4.0.12"
+    "vue-material-design-icons": "^5.0.0",
+    "vue-router": "^4.0.12",
+    "vue3-snackbar": "^1.1.2"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "~4.5.0",
