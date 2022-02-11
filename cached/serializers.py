@@ -1,4 +1,5 @@
 from rest_framework import serializers
+from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from .models import CustomUser, Expense, Tag, Goal
 
 class RegisterUserSerializer(serializers.ModelSerializer):
@@ -14,23 +15,20 @@ class RegisterUserSerializer(serializers.ModelSerializer):
         instance.save()
         return instance
 
+class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
+    def validate(self, attrs):
+        data = super().validate(attrs)
+        refresh = self.get_token(self.user)
+        data['refresh'] = str(refresh)
+        data['access'] = str(refresh.access_token)
+        data['user_id'] = self.user.id
+        return data
+
 class CustomUserSerializer(serializers.ModelSerializer):
     class Meta:
         model = CustomUser
         fields = ('id', 'email', 'is_superuser', 'expenses', 'tags', 'goals')
         depth = 1
-
-# class CreateTagSerializer(serializers.ModelSerializer):
-    # context = serializers.SerializerMethodField()
-    # def get_context(self, obj):
-    #     return self.context.get('user_id')
-    # user_id = serializers.PrimaryKeyRelatedField(
-    #     queryset = CustomUser.objects.all(),
-    #     many = False
-    # )
-    # class Meta:
-    #     model = Tag
-    #     fields = ('id', 'name', 'user_id', 'expenses')
 
 class TagSerializer(serializers.ModelSerializer):
     user = serializers.PrimaryKeyRelatedField(

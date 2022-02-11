@@ -60,7 +60,6 @@ export default {
                         email: this.email, 
                         password:this.password
                     })
-                    console.log(res)
                     if (res.email) {
                         this.successSignup();
                         this.$emit('toggleForm');
@@ -77,25 +76,25 @@ export default {
         successSignup() {
             this.$snackbar.add({
                 type: 'success',
-                text: "You've signed up! Please, log in to access your account"
+                text: "You've signed up! Please, log in to access your account."
             })
         },
         errorMissingFields() {
             this.$snackbar.add({
                 type: 'error',
-                text: 'All fields must be filled'
+                text: 'All fields must be filled to sign up.'
             })
         },
         errorMismatch() {
             this.$snackbar.add({
                 type: 'error',
-                text: 'Passwords do not match'
+                text: 'Passwords must match to sign up.'
             })
         },
         errorUserExists() {
             this.$snackbar.add({
                 type: 'error',
-                text: 'A user with this email already exists'
+                text: 'A user with this email already exists. Please, log in or use a different email.'
             })
         }
     }
