@@ -1,5 +1,7 @@
 <template>
     <div class="login-comp">
+        <h1>Cached.</h1>
+        <h3>The budgeting tool</h3>
         <form class="login-form" v-on:submit.prevent="handleLogin">
             <h2>Log in here</h2>
             <label>Email:</label>

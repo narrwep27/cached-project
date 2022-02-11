@@ -1,6 +1,6 @@
-import axios from 'axios';
+import Axios from 'axios';
 
-const Client = axios.create({
+const Client = Axios.create({
     baseURL: 'http://localhost:8000/api/cached/',
     timeout: 5000,
     headers: {

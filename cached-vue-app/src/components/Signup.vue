@@ -1,5 +1,7 @@
 <template>
     <div class="signup-comp">
+        <h1>Cached.</h1>
+        <h3>The budgeting tool</h3>
         <form v-on:submit.prevent='handleSubmit' class="signup-form">
             <h2>Sign up here</h2>
             <label>Email:</label>
@@ -36,6 +38,7 @@
 import CheckCircleOutline from 'vue-material-design-icons/CheckCircleOutline.vue';
 import AlertCircleOutline from 'vue-material-design-icons/AlertCircleOutline.vue';
 import CheckboxBlankCircleOutline from 'vue-material-design-icons/CheckboxBlankCircleOutline.vue';
+import { Register } from '../services/CustomUser';
 
 export default {
     name: 'Signup',
@@ -50,10 +53,14 @@ export default {
         CheckboxBlankCircleOutline
     },
     methods: {
-        handleSubmit() {
+        async handleSubmit() {
             if (this.email && this.password && this.reEntry) {
                 if (this.password === this.reEntry) {
-                    this.successSignup();
+                    const newUser = {email: this.email, password: this.password}
+                    await Register(newUser)
+                    // this.successSignup();
+                    // this.$emit('toggleForm');
+                    // console.log(newUser)
                 } else {
                     this.errorMismatch();
                 }
@@ -64,21 +71,18 @@ export default {
         successSignup() {
             this.$snackbar.add({
                 type: 'success',
-                title: 'Signed up!',
-                text: 'Please, log in to access your account'
+                text: "You've signed up! Please, log in to access your account"
             })
         },
         errorMissingFields() {
             this.$snackbar.add({
                 type: 'error',
-                title: 'Error',
                 text: 'All fields must be filled'
             })
         },
         errorMismatch() {
             this.$snackbar.add({
                 type: 'error',
-                title: 'Error',
                 text: 'Passwords do not match'
             })
         }

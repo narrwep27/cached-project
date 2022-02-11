@@ -1,13 +1,7 @@
 <template>
     <div>
-        <Signup 
-            v-if="formState === 'signup'" 
-            v-on:toggleForm="toggleForm"
-        />
-        <Login 
-            v-else-if="formState === 'login'" 
-            v-on:toggleForm="toggleForm"
-        />
+        <Signup v-if="formState === 'signup'" v-on:toggleForm="toggleForm" />
+        <Login v-else-if="formState === 'login'" v-on:toggleForm="toggleForm" />
     </div>
 </template>
 
