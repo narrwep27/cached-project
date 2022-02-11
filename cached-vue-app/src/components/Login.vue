@@ -34,9 +34,7 @@ export default {
                     email: this.email,
                     password: this.password
                 });
-                res.user_id 
-                    ? this.$emit('setUser', res.user_id, true) 
-                    : this.errorWrongCreds(res.detail)
+                if (!res.user_id) { this.errorWrongCreds(res.detail) }
             } else {
                 this.errorMissingFields()
             }

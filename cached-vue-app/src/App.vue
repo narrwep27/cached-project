@@ -1,14 +1,29 @@
 <template>
   <div>
     <router-view></router-view>
-    <Vue3Snackbar bottom right :duration="6500"></Vue3Snackbar>
+    <Vue3Snackbar bottom right :duration="6500" />
   </div>
 </template>
 
 <script>
+import { VerifyToken } from './services/CustomUser';
 
 export default {
-  name: 'App'
+  name: 'App',
+  components: {},
+  data: () => ({}),
+  async mounted() {
+    await this.checkUser(),
+    console.log(this.$store.state);
+  },
+  methods: {
+    async checkUser() {
+      if (localStorage.getItem('accessToken')) {
+        const res = await VerifyToken(localStorage.getItem('accessToken'));
+        console.log(res);
+      }
+    }
+  }
 }
 </script>
 

@@ -1,11 +1,13 @@
 <template>
-    <div>
-        <Signup v-if="formState === 'signup'" v-on:toggleForm="toggleForm" />
-        <Login 
-            v-else-if="formState === 'login'" 
-            v-on:toggleForm="toggleForm"
-            v-on:setUser="setUser"
-        />
+    <div class="home-comp">
+        <div>
+            <Signup v-if="formState === 'signup'" v-on:toggleForm="toggleForm" />
+            <Login 
+                v-else-if="formState === 'login'" 
+                v-on:toggleForm="toggleForm"
+                v-on:setUser="setUser"
+            />
+        </div>
     </div>
 </template>
 

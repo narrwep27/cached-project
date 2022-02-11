@@ -1,7 +1,9 @@
 import Axios from 'axios';
 
+const baseURL = 'http://localhost:8000/api/cached/'
+
 const Client = Axios.create({
-    baseURL: 'http://localhost:8000/api/cached/',
+    baseURL: baseURL,
     timeout: 5000,
     headers: {
         Authorization: localStorage.getItem('access_token')

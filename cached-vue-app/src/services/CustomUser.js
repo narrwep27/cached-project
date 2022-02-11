@@ -35,6 +35,15 @@ export const Login = async (userInfo) => {
     }
 };
 
+export const VerifyToken = async (accessToken) => {
+    try {
+        const res = await Client.post(`token/verify`, {token: accessToken});
+        return res;
+    } catch (error) {
+        return error.response;
+    }
+};
+
 export const LoadUser = async (userId) => {
     const res = await Client.get(`user/read/${userId}`)
     return res.data;
