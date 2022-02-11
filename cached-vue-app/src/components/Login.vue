@@ -19,6 +19,8 @@
 </template>
 
 <script>
+import { Login } from '../services/CustomUser';
+
 export default {
     name: 'Login',
     data: () => ({
@@ -26,7 +28,23 @@ export default {
         password: ''
     }),
     methods: {
-        handleLogin() {}
+        async handleLogin() {
+            if (this.email && this.password) {
+                const res = await Login({
+                    email: this.email,
+                    password: this.password
+                })
+                console.log(res)
+            } else {
+                this.errorMissingFields()
+            }
+        },
+        errorMissingFields() {
+            this.$snackbar.add({
+                type: 'error',
+                text: 'All fields must be filled to log in.'
+            })
+        }
     }
 }
 </script>
