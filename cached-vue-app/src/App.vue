@@ -1,14 +1,51 @@
 <template>
   <div>
-    <router-view></router-view>
-    <Vue3Snackbar bottom right :duration="6500"></Vue3Snackbar>
+    <div class="nav-div" v-if="$store.state.auth && $store.state.user">
+        <router-link to="/expenselist" class="nav-link">Expenses</router-link>
+        <router-link to="/analysis" class="nav-link">Analysis</router-link>
+        <router-link to="/goal" class="nav-link">Goals</router-link>
+        <button class="nav-logout" v-on:click="logout">Logout</button>
+    </div>
+    <router-view v-slot="{ Component }">
+      <transition name="fade" mode="out-in">
+        <component :is="Component" />
+      </transition>
+    </router-view>
+    <Vue3Snackbar bottom right :duration="6500" />
   </div>
 </template>
 
 <script>
+import { VerifyToken } from './services/CustomUser';
 
 export default {
   name: 'App',
+  components: {},
+  data: () => ({}),
+  async beforeMount() {
+    await this.checkUser();
+    console.log(this.$route)
+  },
+  methods: {
+    async checkUser() {
+      if (localStorage.getItem('accessToken')) {
+        const res = await VerifyToken(localStorage.getItem('accessToken'));
+        if (res.status === 200) {
+          this.$store.commit('setUser', {
+            userId: localStorage.getItem('userId'),
+            auth: true
+          });
+        }
+      }
+    },
+    logout() {
+      localStorage.removeItem('userId');
+      localStorage.removeItem('accessToken');
+      localStorage.removeItem('refreshToken');
+      this.$store.commit('clearUser');
+      this.$router.push('/home');
+    }
+  }
 }
 </script>
 
@@ -32,7 +69,7 @@ export default {
     flex-direction: column;
     margin: 0 auto;
     padding: 1.5em;
-    border: 1px solid black;
+    border: 1px solid #2c3e50;
     border-radius: 1em;
     background-color: white;
   }
@@ -72,5 +109,32 @@ export default {
   }
   a:visited {
     color: black;
+  }
+
+  .nav-div {
+    display: flex;
+    background-color: white;
+    border-bottom: 1px solid #9db7d1;
+    justify-content: space-evenly;
+    align-items: center;
+    padding: 8px;
+  }
+  .nav-link {
+      text-decoration: none;
+      transition: 150ms;
+  }
+  .nav-link:hover, .nav-link.router-link-active {
+      border-bottom: 3px solid darkgreen;
+  }
+  .nav-logout {
+      font-size: 14px;
+      margin: 0 0 0 60em;
+  }
+
+  .fade-enter-from, .fade-leave-to {
+      opacity: 0;
+  }
+  .fade-enter-active, .fade-leave-active {
+      transition: opacity 300ms ease-out;
   }
 </style>
