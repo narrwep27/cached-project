@@ -1,0 +1,1 @@
+web: gunicorn cached_django.wsgi

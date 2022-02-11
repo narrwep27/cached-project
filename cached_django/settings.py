@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 """
 
 import os
+import dj_database_url
 from pathlib import Path
 from datetime import timedelta
 
@@ -27,12 +28,13 @@ SECRET_KEY = os.environ['SECRET_KEY']
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True if os.environ['MODE'] == 'dev' else False
 
-ALLOWED_HOSTS = ['http://localhost:8000', 'http://localhost:8080']
+ALLOWED_HOSTS = ['*']
 
 CORS_ALLOWED_ORIGINS = [
-    'http://localhost:8000',
     'http://localhost:8080',
+    'http://localhost:8000',
 ]
+
 # Application definition
 
 INSTALLED_APPS = [
@@ -51,7 +53,9 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
