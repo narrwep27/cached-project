@@ -33,6 +33,10 @@ class ListUsers(generics.ListAPIView):
     queryset = CustomUser.objects.all()
     serializer_class = CustomUserSerializer
 
+class RetrieveUser(generics.RetrieveAPIView):
+    queryset = CustomUser.objects.all()
+    serializer_class = CustomUserSerializer
+
 class DestroyUser(generics.DestroyAPIView):
     permission_classes = [IsAdminUser]
     queryset = CustomUser.objects.all()
@@ -41,10 +45,6 @@ class DestroyUser(generics.DestroyAPIView):
         instance = self.get_object()
         self.perform_destroy(instance)
         return Response(data={'msg':'User destroyed'}, status=status.HTTP_200_OK)
-
-class RetrieveUser(generics.RetrieveAPIView):
-    queryset = CustomUser.objects.all()
-    serializer_class = CustomUserSerializer
 
 class CreateTag(generics.CreateAPIView):
     queryset = Tag.objects.all()
