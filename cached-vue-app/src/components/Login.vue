@@ -33,8 +33,10 @@ export default {
                 const res = await Login({
                     email: this.email,
                     password: this.password
-                })
-                console.log(res)
+                });
+                res.user_id 
+                    ? this.$emit('setUser', res.user_id, true) 
+                    : this.errorWrongCreds(res.detail)
             } else {
                 this.errorMissingFields()
             }
@@ -43,6 +45,12 @@ export default {
             this.$snackbar.add({
                 type: 'error',
                 text: 'All fields must be filled to log in.'
+            })
+        },
+        errorWrongCreds(message) {
+            this.$snackbar.add({
+                type: 'error',
+                text: message
             })
         }
     }
