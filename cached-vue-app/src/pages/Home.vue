@@ -2,11 +2,7 @@
     <div class="home-comp">
         <div>
             <Signup v-if="formState === 'signup'" v-on:toggleForm="toggleForm" />
-            <Login 
-                v-else-if="formState === 'login'" 
-                v-on:toggleForm="toggleForm"
-                v-on:setUser="setUser"
-            />
+            <Login v-else-if="formState === 'login'" v-on:toggleForm="toggleForm" />
         </div>
     </div>
 </template>
@@ -20,18 +16,12 @@ export default {
     components: { Signup, Login },
     data: () => ({
         formState: 'signup',
-        user: null,
-        auth: false
     }),
     methods: {
         toggleForm() {
             this.formState === 'signup' 
                 ? this.formState = 'login' 
                 : this.formState = 'signup'
-        },
-        setUser(userId, auth) {
-            this.user = userId,
-            this.auth = auth
         }
     }
 }

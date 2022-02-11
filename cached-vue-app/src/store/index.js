@@ -5,7 +5,12 @@ const store = createStore({
         user: null,
         auth: false
     },
-    mutations: {},
+    mutations: {
+        setUser(state, payload) {
+            state.user = payload.userId;
+            state.auth = payload.auth;
+        }
+    },
     actions: {},
     getters: {},
     modules: {}

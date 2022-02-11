@@ -34,7 +34,11 @@ export default {
                     email: this.email,
                     password: this.password
                 });
-                if (!res.user_id) { this.errorWrongCreds(res.detail) }
+                if (res.user_id) {
+                    this.$store.commit('setUser', {userId: res.user_id, auth: true});
+                } else {
+                    this.errorWrongCreds(res.detail);
+                }
             } else {
                 this.errorMissingFields()
             }
