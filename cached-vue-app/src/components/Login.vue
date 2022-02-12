@@ -36,6 +36,7 @@ export default {
                 });
                 if (res.user_id) {
                     this.$store.commit('setUser', {userId: res.user_id, auth: true});
+                    this.$router.push('/expenselist')
                 } else {
                     this.errorWrongCreds(res.detail);
                 }
