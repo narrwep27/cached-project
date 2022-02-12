@@ -1,7 +1,8 @@
 <template>
-    <div>
+    <div class="not-found-comp">
         <h1>Error 404:</h1>
-        <h2>Oops, it looks like the page you're looking for doesn't exist</h2>
+        <h2>Oops, it looks like the page you're looking for doesn't exist.</h2>
+        <router-link to="/home">Click here to go back to the home page.</router-link>
     </div>
 </template>
 

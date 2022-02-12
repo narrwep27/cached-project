@@ -35,6 +35,7 @@ export default {
             userId: localStorage.getItem('userId'),
             auth: true
           });
+          this.$router.push('/expenselist')
         }
       }
     },

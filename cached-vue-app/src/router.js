@@ -12,7 +12,7 @@ const routes = [
     { path: '/expenselist', component: ExpenseList, name: 'ExpenseList'},
     { path: '/analysis', component: Analysis, name: 'Analysis'},
     { path: '/goal', component: Goal, name: 'Goal'},
-    { path: '/:catchAll(.*)', component: NotFound, name: 'NotFound' }
+    { path: '/:catchAll(.*)*', component: NotFound, name: 'NotFound' }
 ]
 
 const router = createRouter({
