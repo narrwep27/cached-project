@@ -1,9 +1,10 @@
 <template>
   <div>
-    <div class="nav-div" v-if="$store.state.auth && $store.state.user">
+    <div class="nav-div" v-if="$store.state.auth">
         <router-link to="/expenselist" class="nav-link">Expenses</router-link>
         <router-link to="/analysis" class="nav-link">Analysis</router-link>
         <router-link to="/goal" class="nav-link">Goals</router-link>
+        <p>Hi, {{ $store.state.email }}</p>
         <button class="nav-logout" v-on:click="logout">Logout</button>
     </div>
     <router-view v-slot="{ Component }">
@@ -16,24 +17,23 @@
 </template>
 
 <script>
-import { VerifyToken } from './services/CustomUser';
+import { VerifyToken, LoadUser } from './services/CustomUser';
 
 export default {
   name: 'App',
   components: {},
-  data: () => ({}),
   async beforeMount() {
     await this.checkUser();
-    console.log(this.$route)
   },
   methods: {
     async checkUser() {
       if (localStorage.getItem('accessToken')) {
         const res = await VerifyToken(localStorage.getItem('accessToken'));
         if (res.status === 200) {
+          const user = await LoadUser(localStorage.getItem('userId'))
           this.$store.commit('setUser', {
-            userId: localStorage.getItem('userId'),
-            auth: true
+            auth: true,
+            userObj: user
           });
           this.$router.push('/expenselist')
         }
@@ -45,6 +45,13 @@ export default {
       localStorage.removeItem('refreshToken');
       this.$store.commit('clearUser');
       this.$router.push('/home');
+      this.infoLogout();
+    },
+    infoLogout() {
+      this.$snackbar.add({
+        type: 'info',
+        text: 'You have been logged out.'
+      })
     }
   }
 }
@@ -71,11 +78,12 @@ export default {
     margin: 0 auto;
     padding: 1.5em;
     border: 1px solid #2c3e50;
-    border-radius: 1em;
+    border-radius: 8px;
     background-color: white;
   }
   form label {
     text-align: left;
+    font-weight: 500;
   }
   button {
     cursor: pointer;
@@ -103,7 +111,11 @@ export default {
     outline: none;
   }
   input::placeholder {
+    font-family: Avenir, Helvetica, Arial, sans-serif;
     font-size: 14px;
+  }
+  input[type="date"] {
+    font-family: Avenir, Helvetica, Arial, sans-serif;
   }
   a {
     color: black
@@ -121,15 +133,18 @@ export default {
     padding: 8px;
   }
   .nav-link {
+      border-bottom: 4px solid transparent;
       text-decoration: none;
-      transition: 150ms;
+      transition: 250ms;
   }
   .nav-link:hover, .nav-link.router-link-active {
-      border-bottom: 3px solid darkgreen;
+      border-bottom: 4px solid darkgreen;
+  }
+  .nav-div p {
+    margin: 0 0 0 45em;
   }
   .nav-logout {
       font-size: 14px;
-      margin: 0 0 0 60em;
   }
 
   .fade-enter-from, .fade-leave-to {
