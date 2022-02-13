@@ -11,7 +11,7 @@ export const CreateTag = async (newTag) => {
 
 export const EditTag = async (tagId, tagEdit) => {
     try {
-        const res = await Client.put(`tag/update/${tagId}`, tagEdit);
+        const res = await Client.patch(`tag/update/${tagId}`, tagEdit);
         return res.data;
     } catch (error) {
         return error.response;

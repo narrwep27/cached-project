@@ -5,7 +5,12 @@
             <input type="text" placeholder="New tag name" v-model="newTagName" />
             <button type="submit" class="tag-form-form-btn">Create New Tag</button>
         </form>
-        <Tag :key="tag.id" v-for="tag in $store.state.tags" :tag="tag" />
+        <Tag 
+            :key="tag.id" 
+            v-for="(tag, index) in $store.state.tags" 
+            :tag="tag" 
+            :index="index" 
+        />
     </div>
 </template>
 
@@ -21,15 +26,22 @@ export default {
     }),
     methods: {
         async createNewTag() {
-            const res = await CreateTag({
-                user: this.$store.state.userId,
-                name: this.newTagName
+            if (this.newTagName){
+                const res = await CreateTag({
+                    user: this.$store.state.userId,
+                    name: this.newTagName
+                })
+                this.$store.commit('setTags', [...this.$store.state.tags, res])
+                this.newTagName = '';
+            } else {
+                this.errorMissingField();
+            }
+        },
+        errorMissingField() {
+            this.$snackbar.add({
+                type: 'error',
+                text: 'Please, type in a tag name to create a new tag.'
             })
-            this.$store.commit('setTags', [
-                ...this.$store.state.tags,
-                res
-            ])
-            this.newTagName = '';
         }
     }
 }

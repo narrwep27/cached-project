@@ -18,8 +18,8 @@
             </div>
         </div>
         <div :class="editFormDivClass">
-            <form class="tag-comp-edit-form">
-                <input type="text" :value="tag.name"/>
+            <form class="tag-comp-edit-form" v-on:submit.prevent="changeTag">
+                <input type="text" placeholder="New tag name" v-model="newName"/>
                 <button type="submit">Edit</button>
                 <button v-on:click.prevent="showEditForm">Cancel</button>
             </form>
@@ -30,6 +30,7 @@
 <script>
 import PencilOutline from 'vue-material-design-icons/PencilOutline.vue';
 import DeleteEmptyOutline from 'vue-material-design-icons/DeleteEmptyOutline.vue';
+import { EditTag } from '../services/Tag';
 
 export default {
     name: 'Tag',
@@ -38,10 +39,12 @@ export default {
         DeleteEmptyOutline
     },
     props: {
-        tag: Object
+        tag: Object,
+        index: Number
     },
     data: () => ({
-        editFormDivClass: "tag-comp-edit-form-div-hide"
+        editFormDivClass: "tag-comp-edit-form-div-hide",
+        newName: ''
     }),
     methods: {
         showEditForm() {
@@ -49,8 +52,25 @@ export default {
                 ? this.editFormDivClass = "tag-comp-edit-form-div"
                 : this.editFormDivClass = "tag-comp-edit-form-div-hide"
         },
-        async editTag() {},
         showDeleteWarning() {},
+        errorMissingField() {
+            this.$snackbar.add({
+                type: 'error',
+                text: 'You must type in a new tag name to change the name of the chosen tag.'
+            })
+        },
+        async changeTag() {
+            if (this.newName) {
+                const res = await EditTag(this.tag.id, { name: this.newName });
+                let tags = this.$store.state.tags;
+                tags.splice(this.index, 1, res);
+                this.$store.commit('setTags', tags);
+                this.newName = '';
+                this.editFormDivClass = 'tag-comp-edit-form-div-hide'
+            } else {
+                this.errorMissingField()
+            }
+        },
         async deleteTag() {}
     }
 }
