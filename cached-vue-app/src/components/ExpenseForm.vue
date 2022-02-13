@@ -1,11 +1,11 @@
 <template>
     <div class="expense-form-comp">
-        <form class="expense-form-form" v-on:submit.prevent="createExpense">
+        <form class="expense-form-form" v-on:submit.prevent="newExpense">
             <h2>Record an Expense:</h2>
             <label>Date of expense:</label>
-            <input type="date" />
+            <input type="date" v-model="date" />
             <label>Choose a tag:</label>
-            <select class="tag-div-select">
+            <select class="tag-div-select" v-model="tag">
                 <option value="">--Select a tag--</option>
                 <option 
                     :key="tag" 
@@ -15,7 +15,7 @@
                 </option>
             </select>
             <label>Cost:</label>
-            <input type="number" step=0.01 min="0" placeholder="Cost" />
+            <input type="number" step=0.01 min="0" placeholder="Cost" v-model="cost" />
             <button class="expense-form-btn" type="submit">Create Expense</button>
         </form>
         <TagForm />
@@ -24,18 +24,36 @@
 
 <script>
 import TagForm from './TagForm.vue';
+import { CreateExpense } from '../services/Expense';
 
 export default {
     name: 'ExpenseForm',
     components: { TagForm },
     data: () => ({
-        createTagDisplay: false
+        date: null,
+        tag: '',
+        cost: null
     }),
     methods: {
-        async createExpense() {},
-        showCreateTagForm() {
-            this.createTagDisplay === false ? this.createTagDisplay = true : this.createTagDisplay = false
-        }
+        successExpMade() {
+            this.$snackbar.add({
+                type: 'success',
+                text: "You have recorded a new expense."
+            })
+        },
+        async newExpense() {
+            let res = await CreateExpense({
+                date: this.date,
+                tag: this.tag,
+                cost: this.cost,
+                user: this.$store.state.userId
+            });
+            this.$store.commit('setExpenses', [...this.$store.state.expenses, res]);
+            this.date = null;
+            this.tag = null;
+            this.cost = null;
+            this.successExpMade();
+        },
     }
 }
 </script>
