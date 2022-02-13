@@ -20,6 +20,7 @@
 
 <script>
 import { Login } from '../services/CustomUser';
+import { LoadUser } from '../services/CustomUser';
 
 export default {
     name: 'Login',
@@ -35,14 +36,22 @@ export default {
                     password: this.password
                 });
                 if (res.user_id) {
-                    this.$store.commit('setUser', {userId: res.user_id, auth: true});
-                    this.$router.push('/expenselist')
+                    const user = await LoadUser(res.user_id)
+                    this.$store.commit('setUser', {auth: true, userObj: user});
+                    this.$router.push('/expenselist');
+                    this.successLogin();
                 } else {
                     this.errorWrongCreds(res.detail);
                 }
             } else {
                 this.errorMissingFields()
             }
+        },
+        successLogin() {
+            this.$snackbar.add({
+                type: 'success',
+                text: 'You have logged in!'
+            })
         },
         errorMissingFields() {
             this.$snackbar.add({

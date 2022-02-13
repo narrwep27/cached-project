@@ -21,9 +21,9 @@ export const Login = async (userInfo) => {
         Client.interceptors.request.use((config) => {
             const token = localStorage.getItem('accessToken')
             if (token) {
-                config.headers['Authorization'] = `JWT ${token}`
+                config.headers['Authorization'] = `JWT ${token}`;
             }
-            return config
+            return config;
         })
         return res.data;
     } catch (error) {
@@ -38,6 +38,12 @@ export const Login = async (userInfo) => {
 export const VerifyToken = async (accessToken) => {
     try {
         const res = await Client.post(`token/verify`, {token: accessToken});
+        if (res.status === 200) {
+            Client.interceptors.request.use((config) => {
+                config.headers['Authorization'] = `JWT ${accessToken}`;
+                return config;
+            })
+        }
         return res;
     } catch (error) {
         return error.response;
