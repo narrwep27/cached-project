@@ -29,8 +29,16 @@
             <p>Warning: deleting this tag will also delete <b>all of the expenses</b> that belong to it.
                 <br />Are you sure you want to delete it?
             </p>
-            <button class="tag-comp-delete-warn-div-delete-btn" v-on:click="eraseTag">Delete</button>
-            <button class="tag-comp-delete-warn-div-cancel-btn" v-on:click="showDeleteWarning">Cancel</button>
+            <button 
+                class="tag-comp-delete-warn-div-delete-btn" 
+                v-on:click="eraseTag">
+                Delete
+            </button>
+            <button 
+                class="tag-comp-delete-warn-div-cancel-btn" 
+                v-on:click="showDeleteWarning">
+                Cancel
+            </button>
         </div>
     </div>
 </template>
@@ -62,13 +70,15 @@ export default {
             this.editFormDivClass === "tag-comp-edit-form-div-hide"
                 ? this.editFormDivClass = "tag-comp-edit-form-div"
                 : this.editFormDivClass = "tag-comp-edit-form-div-hide"
-            this.deleteWarnDivClass === "tag-comp-delete-warn-div" ? this.deleteWarnDivClass = "tag-comp-delete-warn-div-hide" : null
+            this.deleteWarnDivClass === "tag-comp-delete-warn-div" 
+                ? this.deleteWarnDivClass = "tag-comp-delete-warn-div-hide" : null
         },
         showDeleteWarning() {
             this.deleteWarnDivClass === "tag-comp-delete-warn-div-hide"
                 ? this.deleteWarnDivClass = "tag-comp-delete-warn-div"
                 : this.deleteWarnDivClass = "tag-comp-delete-warn-div-hide"
-            this.editFormDivClass === "tag-comp-edit-form-div" ? this.editFormDivClass = "tag-comp-edit-form-div-hide" : null
+            this.editFormDivClass === "tag-comp-edit-form-div" 
+                ? this.editFormDivClass = "tag-comp-edit-form-div-hide" : null
         },
         errorMissingField() {
             this.$snackbar.add({
@@ -107,8 +117,7 @@ export default {
 
 <style scoped>
     .tag-comp {
-        border-bottom: 1px solid lightgray;
-        padding-bottom: .5em;
+        border-top: 1px solid lightgray;
     }
     .tag-item {
         display: flex;
