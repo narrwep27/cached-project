@@ -9,9 +9,8 @@
             </div>
             <Expense 
                 :key="expense.id"
-                v-for="(expense, index) in $store.state.expenses"
+                v-for="expense in $store.state.expenses"
                 :expense="expense"
-                :index="index"
             />
         </div>
     </div>
@@ -28,10 +27,22 @@ export default {
         ExpenseForm,
         Expense
     },
+    data: () => ({
+        sortedExpenses: []
+    }),
     async beforeMount() {
-        await this.checkToken()
+        await this.checkToken();
+        this.sortByDate();
     },
     methods: {
+        sortByDate() {
+            let expenses = this.$store.state.expenses;
+            this.sortedExpenses = expenses.sort((a, b) => {
+                let aDate = new Date(a.date);
+                let bDate = new Date(b.date);
+                return aDate - bDate;
+            });
+        },
         async checkToken() {
             if (localStorage.getItem('accessToken')) {
                 const res = await VerifyToken(localStorage.getItem('accessToken'));

@@ -53,8 +53,7 @@ export default {
         DeleteEmptyOutline
     },
     props: {
-        expense: Object,
-        index: Number
+        expense: Object
     },
     data: () => ({
         dateString: '',
