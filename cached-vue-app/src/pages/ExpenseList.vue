@@ -61,7 +61,7 @@ export default {
         padding-top: 1em;
     }
     .expense-list-expense-div {
-        margin: 0 3em 0 0;
+        margin: 0 2em 0 0;
         flex-grow: 1;
         border: 1px solid #2c3e50;
         border-radius: 8px;

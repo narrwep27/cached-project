@@ -14,16 +14,37 @@
                 <button v-on:click="toggleEditDiv"><PencilOutline /></button>
             </div>
             <div class="expense-item-delete-btn">
-                <button><DeleteEmptyOutline /></button>
+                <button v-on:click="eraseExpense"><DeleteEmptyOutline /></button>
             </div>
         </div>
-        <div :class="editDivClass"></div>
+        <div :class="editDivClass">
+            <form class="expense-item-edit-div-form" v-on:submit.prevent="changeExpense">
+                <input type="date" v-model="expenseEdit.date"/>
+                <select v-model="expenseEdit.tag">
+                    <option value="">--Select a tag--</option>
+                    <option 
+                        :key="tag.id" 
+                        v-for="tag in $store.state.tags"
+                        :value="tag.id">
+                        {{ tag.name }}
+                    </option>
+                </select>
+                <input 
+                    type="number" step="0.01" min="0" 
+                    v-model="expenseEdit.cost" 
+                    :placeholder="expense.cost"
+                />
+                <button type="submit">Edit</button>
+                <button v-on:click.prevent="toggleEditDiv">Cancel</button>
+            </form>
+        </div>
     </div>
 </template>
 
 <script>
 import PencilOutline from 'vue-material-design-icons/PencilOutline.vue';
 import DeleteEmptyOutline from 'vue-material-design-icons/DeleteEmptyOutline.vue';
+import { EditExpense, DeleteExpense } from '../services/Expense';
 
 export default {
     name: 'Expense',
@@ -39,17 +60,30 @@ export default {
         dateString: '',
         tagObj: '',
         costStr: '',
-        editDivClass: 'expense-item-edit-div-hide'
+        editDivClass: 'expense-item-edit-div-hide',
+        expenseEdit: {
+            date: null,
+            tag: '',
+            cost: null
+        }
     }),
     beforeMount() {
         this.dateConvert();
         this.getTagName();
         this.costToStr();
     },
+    beforeUpdate() {
+        this.dateConvert();
+        this.getTagName();
+        this.costToStr();
+    },
     methods: {
         dateConvert() {
-            let date = new Date(this.expense.date)
-            let strDate = date.toString()
+            let year = parseInt(this.expense.date.slice(0,5));
+            let month = parseInt(this.expense.date.slice(5, 7));
+            let day = parseInt(this.expense.date.slice(8, 10));
+            let date = new Date(year, month - 1, day);
+            let strDate = date.toString();
             this.dateString = strDate.slice(4, 10) + ', ' + strDate.slice(11, 15);
         },
         getTagName() {
@@ -63,6 +97,34 @@ export default {
             this.editDivClass === 'expense-item-edit-div-hide'
                 ? this.editDivClass = 'expense-item-edit-div'
                 : this.editDivClass = 'expense-item-edit-div-hide'
+        },
+        infoDeleteConfirm() {
+            this.$snackbar.add({
+                type: 'info',
+                text: 'Expense has been deleted.'
+            })
+        },
+        async changeExpense() {
+            let res = await EditExpense(this.expense.id, {
+                cost: this.expenseEdit.cost || this.expense.cost,
+                date: this.expenseEdit.date || this.expense.date,
+                tag: this.expenseEdit.tag || this.expense.tag,
+                user: this.$store.state.userId
+            })
+            let expensesArr = this.$store.state.expenses;
+            let newExpArr = expensesArr.filter(exp => exp.id !== this.expense.id);
+            newExpArr = [...newExpArr, res];
+            this.$store.commit('setExpenses', newExpArr);
+            this.expenseEdit.date = null;
+            this.expenseEdit.tag = '';
+            this.expenseEdit.cost = null;
+            this.editDivClass = "expense-item-edit-div-hide";
+        },
+        async eraseExpense() {
+            await DeleteExpense(this.expense.id);
+            let newExpenses = this.$store.state.expenses.filter(exp => exp.id !== this.expense.id);
+            this.$store.commit('setExpenses', newExpenses);
+            this.infoDeleteConfirm();
         }
     }
 }
@@ -86,10 +148,22 @@ export default {
         border-radius: 3px;
         margin: 5px 8px;
     }
-    .expense-item-edit-div {
-        display: flex;
-    }
+    .expense-item-edit-div {}
     .expense-item-edit-div-hide {
         display: none;
+    }
+    .expense-item-edit-div-form {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        padding: 10px 10px 5px 10px;
+        margin: 10px;
+    }
+    .expense-item-edit-div select {
+        height: 2.5em;
+    }
+    .expense-item-edit-div button {
+        font-size: 14px;
+        height: 35px;
     }
 </style>

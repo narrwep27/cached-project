@@ -65,6 +65,5 @@ export default {
     .tag-form-form-btn {
         margin: 1em;
         font-size: 14px;
-        transition: 100ms;
     }
 </style>

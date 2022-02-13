@@ -42,7 +42,7 @@ export default {
 
 <style scoped>
     .expense-form-comp {
-        margin: 0 3em;
+        margin: 0 2em;
         width: 35%;
     }
     .expense-form-form {
