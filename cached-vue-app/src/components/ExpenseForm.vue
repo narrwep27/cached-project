@@ -4,7 +4,17 @@
         <form class="expense-form-form" v-on:submit.prevent="createExpense">
             <label>Date of expense:</label>
             <input type="date" />
-            <div class="tag-div-comp">
+            <label>Choose a tag:</label>
+            <select class="tag-div-select">
+                <option value="">--Select a tag--</option>
+                <option 
+                    :key="tag" 
+                    v-for="tag in $store.state.tags"
+                    :value="tag.id">
+                    {{ tag.name }}
+                </option>
+            </select>
+            <!-- <div class="tag-div-comp">
                 <select class="tag-div-select">
                     <option value="">--Select a tag--</option>
                 </select>
@@ -21,17 +31,21 @@
                         <button type="submit">Create Tag</button>
                     </form>
                 </div>
-            </div>
+            </div> -->
             <label>Cost:</label>
             <input type="number" step=0.01 min="0" placeholder="Cost" />
             <button class="expense-form-btn" type="submit">Create Expense</button>
         </form>
+        <TagForm />
     </div>
 </template>
 
 <script>
+import TagForm from './TagForm.vue';
+
 export default {
     name: 'ExpenseForm',
+    components: { TagForm },
     data: () => ({
         createTagDisplay: false
     }),
@@ -47,19 +61,14 @@ export default {
 <style scoped>
     .expense-form-comp {
         margin: 0 5em;
-        width: 28%;
+        width: 35%;
     }
     .expense-form-form {
         padding-top: 2.5em;
-        height: 335px;
     }
     .expense-form-btn {
         margin: 1.5em auto;
         width: 50%;
-        transition: 100ms
-    }
-    .expense-form-btn:active {
-        font-size: 15px;
     }
 
     .tag-div-comp {
@@ -79,15 +88,10 @@ export default {
     }
     .tag-div-create-btn {
         margin: 1em;
-        transition: 100ms;
         font-size: 14px;
     }
-    .tag-div-create-btn:active {
-        font-size: 15px;
-        margin: 19px;
-    }
 
-    .tag-div-create-div {
+    /* .tag-div-create-div {
         position: absolute;
         height: 399px;
         width: 28%;
@@ -111,5 +115,5 @@ export default {
     }
     .tag-div-create-form button:active {
         font-size: 13px;
-    }
+    } */
 </style>

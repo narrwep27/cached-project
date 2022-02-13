@@ -18,6 +18,15 @@ const store = createStore({
             state.expenses = payload.userObj.expenses;
             state.goals = payload.userObj.goals;
         },
+        setTags(state, payload) {
+            state.tags = payload
+        },
+        setExpenses(state, payload) {
+            state.expenses = payload
+        },
+        setGoals(state, payload) {
+            state.goals = payload
+        },
         clearUser(state) {
             state.auth = false,
             state.userId = null,
