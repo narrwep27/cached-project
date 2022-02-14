@@ -145,7 +145,7 @@ export default {
     .expense-item-delete-btn button {
         border: 1px solid #2c3e50;
         border-radius: 3px;
-        margin: 5px 8px;
+        margin: 5px 10px;
     }
     .expense-item-edit-div-hide {
         display: none;

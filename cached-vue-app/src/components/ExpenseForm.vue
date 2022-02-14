@@ -70,8 +70,7 @@ export default {
 
 <style scoped>
     .expense-form-comp {
-        margin: 0 2em;
-        width: 35%;
+        margin: 0 2em 0 5em;
     }
     .expense-form-form {
         padding-top: 0;
