@@ -44,7 +44,7 @@ export default {
       localStorage.removeItem('accessToken');
       localStorage.removeItem('refreshToken');
       this.$store.commit('clearUser');
-      this.$router.push('/home');
+      this.$router.push('/');
       this.infoLogout();
     },
     infoLogout() {
