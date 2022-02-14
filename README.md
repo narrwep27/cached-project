@@ -20,7 +20,10 @@ Cached: a budgeting app to help keep track of your expenses and reach your savin
 
 **Planning Links & Attachments:**
 
+- Deployed Netlify Link: [cached](https://cached.netlify.app/)
+
 - [Trello Board](https://trello.com/b/IhtXefM2)
+
 - Entity Relationship Diagram:  
 
 ![ERD](./images/ERD.jpg)
@@ -29,21 +32,22 @@ Cached: a budgeting app to help keep track of your expenses and reach your savin
 
 ![CHD](./images/CHD.jpg)
 
-- Deployed Heroku Link:
-
 ***
 
 ### **Technologies Used:**
 
 - PostgreSQL
 - Django
+  - Django Rest Framework (DRF)
+  - DRF SimpleJWT
 - Axios
 - HTML5
 - CSS3
 - Javascript ES6
 - Vue.js
+  - Vuex
 - Heroku
-- **Vue Libraries
+- Netlify
 
 ### **Screenshots:**
 
@@ -52,3 +56,5 @@ Cached: a budgeting app to help keep track of your expenses and reach your savin
 - [Visual Paradigm Online](https://www.visual-paradigm.com/)
 - [Trello](https://trello.com/)
 - [Starline/Freepik Background Image](https://www.freepik.com/free-vector/white-background-with-triangle-patterns_4403214.htm#query=background%20pattern&position=1&from_view=keyword)
+- [Vue Material Design Icons](https://www.npmjs.com/package/vue-material-design-icons)
+- [vue3-snackbar Toast Notifications](https://github.com/craigrileyuk/vue3-snackbar)
