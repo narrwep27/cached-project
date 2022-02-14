@@ -10,7 +10,7 @@ import { VerifyToken } from '../services/CustomUser';
 export default {
     name: 'About',
     async beforeMount() {
-        await this.checkToken()
+        await this.checkToken();
     },
     methods: {
         async checkToken() {
@@ -18,12 +18,12 @@ export default {
                 const res = await VerifyToken(localStorage.getItem('accessToken'));
                 if (res.status === 401) {
                     this.$store.commit('clearUser');
-                    this.$router.push('/home');
+                    this.$router.push('/');
                     this.warningExpire();
                 }
             } else {
                 this.$store.commit('clearUser');
-                this.$router.push('/home');
+                this.$router.push('/');
             }
         },
         warningExpire() {

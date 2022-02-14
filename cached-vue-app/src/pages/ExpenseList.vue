@@ -71,27 +71,19 @@ export default {
         filterYearChoice: null,
         filterMonthChoice: null,
         filterTagChoice: null,
+        filteredExpenses: []
     }),
     async beforeMount() {
         await this.checkToken();
-        this.sortByDate();
         this.getFilterYears();
         this.getFilterMonths();
+        this.sortedExpenses = this.$store.getters.sortExpensesByDate;
     },
     beforeUpdate() {
-        this.sortByDate();
         this.getFilterYears();
         this.getFilterMonths();
     },
     methods: {
-        sortByDate() {
-            let expenses = this.$store.state.expenses;
-            this.sortedExpenses = expenses.sort((a, b) => {
-                let aDate = new Date(a.date);
-                let bDate = new Date(b.date);
-                return bDate - aDate;
-            });
-        },
         getFilterYears() {
             let years = this.$store.state.expenses.map((exp) => {
                 return exp.date.slice(0, 4);
@@ -130,12 +122,12 @@ export default {
                 const res = await VerifyToken(localStorage.getItem('accessToken'));
                 if (res.status === 401) {
                     this.$store.commit('clearUser');
-                    this.$router.push('/home');
+                    this.$router.push('/');
                     this.warningExpire();
                 }
             } else {
                 this.$store.commit('clearUser');
-                this.$router.push('/home');
+                this.$router.push('/');
             }
         },
         warningExpire() {

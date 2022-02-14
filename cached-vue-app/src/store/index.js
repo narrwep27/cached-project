@@ -37,7 +37,16 @@ const store = createStore({
         }
     },
     actions: {},
-    getters: {},
+    getters: {
+        sortExpensesByDate(state) {
+            let sortedExpenses = state.expenses.sort((a, b) => {
+                let aDate = new Date(a.date);
+                let bDate = new Date(b.date);
+                return bDate - aDate;
+            });
+            return sortedExpenses;
+        }
+    },
     modules: {}
 });
 
