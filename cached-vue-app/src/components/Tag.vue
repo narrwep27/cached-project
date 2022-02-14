@@ -159,9 +159,12 @@ export default {
             "alertImage deleteBtn cancelBtn";
         align-items: center;
         justify-items: center;
+        width: 95%;
+        margin: 0 auto;
+        margin-bottom: 7px;
         border: 1px solid #2c3e50;
         border-radius: 8px;
-        padding: 8px;
+        padding: 8px 8px 0 8px;
     }
     .tag-comp-delete-warn-div-hide {
         display: none;
