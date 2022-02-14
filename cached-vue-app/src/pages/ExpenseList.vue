@@ -4,22 +4,22 @@
         <div class="expense-list-form-expense-container">
             <form 
                 class="expense-list-expense-div-filter-form"
-                v-on:click.prevent="filterExpenses">
+                v-on:change.prevent="filterExpenses">
                 <p>Filter expenses:</p>
                 <select v-model="filterYearChoice">
                     <option :value="null">--Select Year--</option>
                     <option 
                         :key="year" 
-                        v-for="year in filterYears" 
+                        v-for="year in filterYearOptions" 
                         :value="year">
                         {{ year }}
                     </option>
                 </select>
-                <select v-model="filterMonthChoice">
+                <select v-model="filterMonthChoice" :disabled="!filterYearChoice && !filterTagChoice">
                     <option :value="null">--Select Month--</option>
                     <option 
                         :key="month.num" 
-                        v-for="month in filterMonths" 
+                        v-for="month in filterMonthOptions" 
                         :value="month.num">
                         {{ month.name }}
                     </option>
@@ -33,7 +33,6 @@
                         {{ tag.name }}
                     </option>
                 </select>
-                <button type="submit">Filter</button>
                 <button v-on:click.prevent="clearFilters">Clear filters</button>
             </form>
             <div class="expense-list-expense-div">
@@ -42,11 +41,23 @@
                     <h3 class="expense-list-expense-div-header-tag">Tag</h3>
                     <h3 class="expense-list-expense-div-header-cost">Cost</h3>
                 </div>
-                <Expense 
-                    :key="expense.id"
-                    v-for="expense in $store.state.expenses"
-                    :expense="expense"
-                />
+                <div v-if="filterYearChoice || filterTagChoice">
+                    <div v-if="filteredExpenses.length > 0">
+                        <Expense 
+                            :key="expense.id"
+                            v-for="expense in filteredExpenses"
+                            :expense="expense"
+                        />
+                    </div>
+                    <div v-else>No expenses fit those filters</div>
+                </div>
+                <div v-else>
+                    <Expense 
+                        :key="expense.id"
+                        v-for="expense in sortedExpenses"
+                        :expense="expense"
+                    />
+                </div>
             </div>
         </div>
     </div>
@@ -65,9 +76,8 @@ export default {
     },
     data: () => ({
         sortedExpenses: [],
-        filterYears: [],
-        filterMonths: [],
-        filterTags: [],
+        filterYearOptions: [],
+        filterMonthOptions: [],
         filterYearChoice: null,
         filterMonthChoice: null,
         filterTagChoice: null,
@@ -75,28 +85,29 @@ export default {
     }),
     async beforeMount() {
         await this.checkToken();
-        this.getFilterYears();
-        this.getFilterMonths();
+        this.getFilterYearOptions();
+        this.getFilterMonthOptions();
         this.sortedExpenses = this.$store.getters.sortExpensesByDate;
     },
     beforeUpdate() {
-        this.getFilterYears();
-        this.getFilterMonths();
+        this.sortedExpenses = this.$store.getters.sortExpensesByDate;
+        this.getFilterYearOptions();
+        this.getFilterMonthOptions();
     },
     methods: {
-        getFilterYears() {
+        getFilterYearOptions() {
             let years = this.$store.state.expenses.map((exp) => {
                 return exp.date.slice(0, 4);
             });
-            this.filterYears = [...new Set(years)];
+            this.filterYearOptions = [...new Set(years)];
         },
-        getFilterMonths() {
+        getFilterMonthOptions() {
             let months = this.$store.state.expenses.map((exp) => {
                 return exp.date.slice(5, 7);
             });
             let monthSet = [...new Set(months)];
             let sortedMonths = monthSet.map(month => parseInt(month)).sort((a, b) => { return a - b })
-            this.filterMonths = sortedMonths.map((month) => {
+            this.filterMonthOptions = sortedMonths.map((month) => {
                 if (month === 1) { return { name: 'January', num: 1 } }
                 else if (month === 2) { return { name: 'February', num: 2 } }
                 else if (month === 3) {return { name: 'March', num: 3 } }
@@ -111,11 +122,35 @@ export default {
                 else if (month === 12) { return { name: 'December', num: 12 } }
             })
         },
-        filterExpenses() {},
+        filterExpenses() {
+            if (this.filterYearChoice || this.filterTagChoice) {
+                if (this.filterYearChoice && !this.filterTagChoice) {
+                    this.filteredExpenses = this.$store.state.expenses.filter(exp => exp.date.slice(0, 4) === this.filterYearChoice);
+                    if (this.filterMonthChoice) {
+                        this.filteredExpenses = this.filteredExpenses.filter(exp => parseInt(exp.date.slice(5, 7)) === this.filterMonthChoice)
+                    }
+                } else if (this.filterTagChoice && !this.filterYearChoice) {
+                    this.filteredExpenses = this.$store.state.expenses.filter(exp => exp.tag === this.filterTagChoice)
+                    if (this.filterMonthChoice) {
+                        this.filteredExpenses = this.filteredExpenses.filter(exp => parseInt(exp.date.slice(5, 7)) === this.filterMonthChoice)
+                    }
+                } else if (this.filterYearChoice && this.filterTagChoice) {
+                    this.filteredExpenses = this.$store.state.expenses.filter(exp => exp.date.slice(0, 4) === this.filterYearChoice)
+                        .filter(exp => exp.tag === this.filterTagChoice)
+                    if (this.filterMonthChoice) {
+                        this.filteredExpenses = this.filteredExpenses.filter(exp => parseInt(exp.date.slice(5, 7)) === this.filterMonthChoice)
+                    }
+                }
+            } else { 
+                this.filteredExpenses = [];
+                this.filterMonthChoice = null;
+            }
+        },
         clearFilters() {
             this.filterYearChoice = null;
             this.filterMonthChoice = null;
             this.filterTagChoice = null;
+            this.filteredExpenses = [];
         },
         async checkToken() {
             if (localStorage.getItem('accessToken')) {
@@ -169,6 +204,9 @@ export default {
     }
     .expense-list-expense-div-filter-form select {
         height: 2.5em;
+    }
+    .expense-list-expense-div-filter-form select:disabled {
+        cursor: not-allowed;
     }
 
     .expense-list-expense-div-header {
