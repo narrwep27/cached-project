@@ -147,7 +147,6 @@ export default {
         border-radius: 3px;
         margin: 5px 8px;
     }
-    .expense-item-edit-div {}
     .expense-item-edit-div-hide {
         display: none;
     }

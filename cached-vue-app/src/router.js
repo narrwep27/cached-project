@@ -7,7 +7,7 @@ import Goal from './pages/Goal.vue';
 import NotFound from './pages/NotFound.vue';
 
 const routes = [
-    { path: '/home', component: Home, name: 'Home' },
+    { path: '/', component: Home, name: 'Home' },
     { path: '/about', component: About, name: 'About' },
     { path: '/expenselist', component: ExpenseList, name: 'ExpenseList'},
     { path: '/analysis', component: Analysis, name: 'Analysis'},
