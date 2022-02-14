@@ -62,7 +62,7 @@ export default {
     margin: 0;
     padding: 0 0 2em 0;
     background-image: url('./assets/18410.jpg');
-    background-size:cover;
+    background-size: 100vw;
   }
   #app {
     font-family: Avenir, Helvetica, Arial, sans-serif;
