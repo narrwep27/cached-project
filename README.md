@@ -58,3 +58,4 @@ Cached: a budgeting app to help keep track of your expenses and reach your savin
 - [Starline/Freepik Background Image](https://www.freepik.com/free-vector/white-background-with-triangle-patterns_4403214.htm#query=background%20pattern&position=1&from_view=keyword)
 - [Vue Material Design Icons](https://www.npmjs.com/package/vue-material-design-icons)
 - [vue3-snackbar Toast Notifications](https://github.com/craigrileyuk/vue3-snackbar)
+- [vue-chartkick](https://github.com/ankane/vue-chartkick)

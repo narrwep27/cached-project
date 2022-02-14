@@ -1,6 +1,16 @@
 <template>
     <div class="page analysis-comp">
-        <h2>Analysis Page</h2>
+        <h2>Expense Analysis</h2>
+        <column-chart 
+            :data="tagExpenses" 
+            class="column-chart"
+            width="80%"
+        />
+        <br />
+        <pie-chart 
+            :data="tagExpenses" 
+            class="pie-chart"
+        />
     </div>
 </template>
 
@@ -9,10 +19,27 @@ import { VerifyToken } from '../services/CustomUser';
 
 export default {
     name: 'Analysis',
+    data: () => ({
+        tagExpenses: []
+    }),
     async beforeMount() {
-        await this.checkToken()
+        await this.checkToken();
+        this.getTagExpenses();
     },
     methods: {
+        getTagExpenses() {
+            let dataObj = {}
+            this.$store.state.tags.forEach((tag) => {
+                let totalCost = 0;
+                this.$store.state.expenses.forEach((exp) => {
+                    if (exp.tag === tag.id) {
+                        totalCost = totalCost + parseInt(exp.cost);
+                    }
+                });
+                dataObj[tag.name] = totalCost;
+            });
+            this.tagExpenses = dataObj;
+        },
         async checkToken() {
             if (localStorage.getItem('accessToken')) {
                 const res = await VerifyToken(localStorage.getItem('accessToken'));
@@ -35,3 +62,12 @@ export default {
     }
 }
 </script>
+
+<style scoped>
+    .column-chart {
+        margin: 1em auto;
+        background-color: white;
+        border: 1px solid #c0d7ee;
+        border-radius: 5px;
+    }
+</style>

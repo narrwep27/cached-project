@@ -125,12 +125,6 @@ export default {
             this.filterMonthChoice = null;
             this.filterTagChoice = null;
         },
-        warningExpire() {
-            this.$snackbar.add({
-                type: 'warning',
-                text: 'Your session has expired. Please, log in again to access your account.'
-            })
-        },
         async checkToken() {
             if (localStorage.getItem('accessToken')) {
                 const res = await VerifyToken(localStorage.getItem('accessToken'));
@@ -143,6 +137,12 @@ export default {
                 this.$store.commit('clearUser');
                 this.$router.push('/home');
             }
+        },
+        warningExpire() {
+            this.$snackbar.add({
+                type: 'warning',
+                text: 'Your session has expired. Please, log in again to access your account.'
+            })
         }
     }
 }
