@@ -48,7 +48,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework.authtoken',
     'rest_framework_simplejwt',
-    'corsheaders'
+    'corsheaders',
 ]
 
 MIDDLEWARE = [
@@ -99,14 +99,13 @@ REST_FRAMEWORK = {
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'cached',
-        'USER': 'cacheduser',
-        'PASSWORD': 'cached',
-        'HOST': 'localhost'
-    }
+    'default': dj_database_url.config(conn_max_age=600)
 }
+# 'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': 'cached',
+#         'USER': 'cacheduser',
+#         'PASSWORD': 'cached',
+#         'HOST': 'localhost'
 
 
 # Password validation
@@ -185,3 +184,5 @@ SIMPLE_JWT = {
     'SLIDING_TOKEN_LIFETIME': timedelta(minutes=5),
     'SLIDING_TOKEN_REFRESH_LIFETIME': timedelta(days=1),
 }
+
+STATIC_ROOT = os.path.join(BASE_DIR, "static/")
