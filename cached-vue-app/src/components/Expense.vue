@@ -21,7 +21,7 @@
             <form class="expense-item-edit-div-form" v-on:submit.prevent="changeExpense">
                 <input type="date" v-model="expenseEdit.date"/>
                 <select v-model="expenseEdit.tag">
-                    <option value="">--Select a tag--</option>
+                    <option :value="null">--Select a tag--</option>
                     <option 
                         :key="tag.id" 
                         v-for="tag in $store.state.tags"
@@ -62,7 +62,7 @@ export default {
         editDivClass: 'expense-item-edit-div-hide',
         expenseEdit: {
             date: null,
-            tag: '',
+            tag: null,
             cost: null
         }
     }),
@@ -97,6 +97,12 @@ export default {
                 ? this.editDivClass = 'expense-item-edit-div'
                 : this.editDivClass = 'expense-item-edit-div-hide'
         },
+        infoEditConfirm() {
+            this.$snackbar.add({
+                type: 'info',
+                text: 'Expense has been edited.'
+            })
+        },
         infoDeleteConfirm() {
             this.$snackbar.add({
                 type: 'info',
@@ -115,9 +121,10 @@ export default {
             newExpArr = [...newExpArr, res];
             this.$store.commit('setExpenses', newExpArr);
             this.expenseEdit.date = null;
-            this.expenseEdit.tag = '';
+            this.expenseEdit.tag = null;
             this.expenseEdit.cost = null;
             this.editDivClass = "expense-item-edit-div-hide";
+            this.infoEditConfirm();
         },
         async eraseExpense() {
             await DeleteExpense(this.expense.id);
