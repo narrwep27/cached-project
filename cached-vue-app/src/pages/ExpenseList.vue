@@ -54,7 +54,7 @@
                 <div v-else>
                     <Expense 
                         :key="expense.id"
-                        v-for="expense in sortedExpenses"
+                        v-for="expense in $store.state.expenses"
                         :expense="expense"
                     />
                 </div>
@@ -87,7 +87,6 @@ export default {
         await this.checkToken();
         this.getFilterYearOptions();
         this.getFilterMonthOptions();
-        this.sortedExpenses = this.$store.getters.sortExpensesByDate;
     },
     beforeUpdate() {
         this.sortedExpenses = this.$store.getters.sortExpensesByDate;
