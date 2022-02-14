@@ -34,6 +34,9 @@ export default {
         await this.checkToken();
         this.sortByDate();
     },
+    beforeUpdate() {
+        this.sortByDate();
+    },
     methods: {
         sortByDate() {
             let expenses = this.$store.state.expenses;

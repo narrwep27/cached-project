@@ -109,6 +109,9 @@ export default {
             let tags = this.$store.state.tags;
             tags.splice(this.index, 1);
             this.$store.commit('setTags', tags);
+            let expenses = this.$store.state.expenses;
+            let newExp = expenses.filter(exp => exp.tag !== this.tag.id);
+            this.$store.commit('setExpenses', newExp);
             this.infoTagDelete();
         }
     }
