@@ -1,6 +1,7 @@
 import Axios from 'axios';
 
-const baseURL = 'http://localhost:8000/api/cached/'
+// const baseURL = 'http://localhost:8000/api/cached/';
+const baseURL = 'https://cached-api.herokuapp.com/api/cached';
 
 const Client = Axios.create({
     baseURL: baseURL,
