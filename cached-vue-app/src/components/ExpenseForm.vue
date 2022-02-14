@@ -41,18 +41,28 @@ export default {
                 text: "You have recorded a new expense."
             })
         },
+        errorMissingFields() {
+            this.$snackbar.add({
+                type: 'error',
+                text: "You need to fill out all the fields to create a new expense."
+            })
+        },
         async newExpense() {
-            let res = await CreateExpense({
-                date: this.date,
-                tag: this.tag,
-                cost: this.cost,
-                user: this.$store.state.userId
-            });
-            this.$store.commit('setExpenses', [...this.$store.state.expenses, res]);
-            this.date = null;
-            this.tag = null;
-            this.cost = null;
-            this.successExpMade();
+            if (this.date && this.tag && this.cost) {
+                let res = await CreateExpense({
+                    date: this.date,
+                    tag: this.tag,
+                    cost: this.cost,
+                    user: this.$store.state.userId
+                });
+                this.$store.commit('setExpenses', [...this.$store.state.expenses, res]);
+                this.date = null;
+                this.tag = '';
+                this.cost = null;
+                this.successExpMade();
+            } else {
+                this.errorMissingFields();
+            }
         },
     }
 }
