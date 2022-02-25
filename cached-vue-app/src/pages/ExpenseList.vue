@@ -15,7 +15,7 @@
                         {{ year }}
                     </option>
                 </select>
-                <select v-model="filterMonthChoice" :disabled="!filterYearChoice && !filterTagChoice">
+                <select v-model="filterMonthChoice" :disabled="!filterYearChoice">
                     <option :value="null">--Select Month--</option>
                     <option 
                         :key="month.num" 
@@ -47,6 +47,7 @@
                             :key="expense.id"
                             v-for="expense in filteredExpenses"
                             :expense="expense"
+                            v-on:filterExpenses="filterExpenses"
                         />
                     </div>
                     <div v-else>No expenses fit those filters</div>
@@ -124,20 +125,28 @@ export default {
         filterExpenses() {
             if (this.filterYearChoice || this.filterTagChoice) {
                 if (this.filterYearChoice && !this.filterTagChoice) {
-                    this.filteredExpenses = this.$store.state.expenses.filter(exp => exp.date.slice(0, 4) === this.filterYearChoice);
+                    this.filteredExpenses = this.$store.state.expenses.filter((exp) => {
+                        return exp.date.slice(0, 4) === this.filterYearChoice;
+                    });
                     if (this.filterMonthChoice) {
-                        this.filteredExpenses = this.filteredExpenses.filter(exp => parseInt(exp.date.slice(5, 7)) === this.filterMonthChoice)
+                        this.filteredExpenses = this.filteredExpenses.filter((exp) => {
+                            return parseInt(exp.date.slice(5, 7)) === this.filterMonthChoice;
+                        })
                     }
                 } else if (this.filterTagChoice && !this.filterYearChoice) {
-                    this.filteredExpenses = this.$store.state.expenses.filter(exp => exp.tag === this.filterTagChoice)
-                    if (this.filterMonthChoice) {
-                        this.filteredExpenses = this.filteredExpenses.filter(exp => parseInt(exp.date.slice(5, 7)) === this.filterMonthChoice)
-                    }
+                    this.filteredExpenses = this.$store.state.expenses.filter((exp) => {
+                        return exp.tag === this.filterTagChoice;
+                    });
                 } else if (this.filterYearChoice && this.filterTagChoice) {
-                    this.filteredExpenses = this.$store.state.expenses.filter(exp => exp.date.slice(0, 4) === this.filterYearChoice)
-                        .filter(exp => exp.tag === this.filterTagChoice)
+                    this.filteredExpenses = this.$store.state.expenses.filter((exp) => {
+                        return exp.date.slice(0, 4) === this.filterYearChoice;
+                        }).filter((exp) => {
+                            return exp.tag === this.filterTagChoice;
+                        });
                     if (this.filterMonthChoice) {
-                        this.filteredExpenses = this.filteredExpenses.filter(exp => parseInt(exp.date.slice(5, 7)) === this.filterMonthChoice)
+                        this.filteredExpenses = this.filteredExpenses.filter((exp) => {
+                            return parseInt(exp.date.slice(5, 7)) === this.filterMonthChoice;
+                        });
                     }
                 }
             } else { 
