@@ -132,6 +132,7 @@ export default {
             await DeleteExpense(this.expense.id);
             let newExpenses = this.$store.state.expenses.filter(exp => exp.id !== this.expense.id);
             this.$store.commit('setExpenses', newExpenses);
+            this.$emit('filterExpenses');
             this.infoDeleteConfirm();
         }
     }
