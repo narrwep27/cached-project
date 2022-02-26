@@ -4,12 +4,16 @@
         <column-chart 
             :data="tagExpenses" 
             class="column-chart"
-            width="80%"
+            prefix="$"
+            width="60%"
         />
         <br />
         <pie-chart 
             :data="tagExpenses" 
             class="pie-chart"
+            legend="right"
+            prefix="$"
+            width="35%"
         />
     </div>
 </template>
@@ -69,5 +73,8 @@ export default {
         background-color: white;
         border: 1px solid #c0d7ee;
         border-radius: 5px;
+    }
+    .pie-chart {
+        margin: 1em auto;
     }
 </style>
