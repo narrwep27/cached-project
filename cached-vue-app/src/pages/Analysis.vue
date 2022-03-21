@@ -38,18 +38,17 @@ export default {
     }),
     async beforeMount() {
         await this.checkToken();
-        this.getTagExpenses();
         this.getTodaysDate();
-        this.filterExpenseByDate();
     },
     methods: {
         getTagExpenses() {
             let dataObj = {}
             this.$store.state.tags.forEach((tag) => {
                 let totalCost = 0;
-                this.$store.state.expenses.forEach((exp) => {
+                console.log('hello')
+                this.expensesByDate.forEach((exp) => {
                     if (exp.tag === tag.id) {
-                        totalCost = totalCost + parseInt(exp.cost);
+                        totalCost = totalCost + parseFloat(exp.cost);
                     }
                 });
                 dataObj[tag.name] = totalCost;
@@ -61,12 +60,14 @@ export default {
             let month = `${today.getMonth() + 1}`
             if (month.length === 1) { month = `0${month}`}
             this.chartDate = `${today.getFullYear()}-${month}`
+            this.filterExpenseByDate()
         },
         filterExpenseByDate() {
             this.expensesByDate = this.$store.state.expenses.filter((exp) => {
                 let dateString = exp.date.slice(0, 7)
                 return dateString === this.chartDate
             })
+            this.getTagExpenses()
         },
         async checkToken() {
             if (localStorage.getItem('accessToken')) {
