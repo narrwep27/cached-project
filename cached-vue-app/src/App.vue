@@ -114,7 +114,8 @@ export default {
     font-family: Avenir, Helvetica, Arial, sans-serif;
     font-size: 14px;
   }
-  input[type="date"] {
+  input[type="date"],
+  input[type="month"] {
     font-family: Avenir, Helvetica, Arial, sans-serif;
   }
   a {
