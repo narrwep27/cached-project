@@ -1,6 +1,7 @@
 <template>
     <div class="page analysis-comp">
         <h2>Monthly Spending</h2>
+        <LineGraph />
         <h2>Expenses by Tag</h2>
         <TagChart />
     </div>
@@ -9,11 +10,13 @@
 <script>
 import { VerifyToken } from '../services/CustomUser'
 import TagChart from "../components/TagChart.vue"
+import LineGraph from "../components/LineGraph.vue"
 
 export default {
     name: 'Analysis',
     components: {
-        TagChart
+        TagChart,
+        LineGraph
     },
     data: () => ({}),
     async beforeMount() {
