@@ -25,11 +25,11 @@ export default {
     methods: {
         getInitialDates() {
             const end = new Date()
+            const start = new Date(this.endDate.year, this.endDate.month - 6)
             this.endDate = {
                 month: end.getMonth() + 1,
                 year: end.getFullYear()
             }
-            const start = new Date(this.endDate.year, this.endDate.month - 6)
             this.startDate = {
                 month: start.getMonth() + 1,
                 year: start.getFullYear()
