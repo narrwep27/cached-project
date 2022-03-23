@@ -1,5 +1,12 @@
 <template>
     <div class='lineGraph-comp'>
+        <line-chart :data="monthlyTotals" 
+            class="lineGraph-graph"
+            width="60%"
+            :curve="false"
+            prefix="$"
+            thousands=","
+        />
     </div>
 </template>
 
@@ -92,5 +99,6 @@ export default {
 <style scoped>
     .lineGraph-comp {
         display: flex;
+        justify-content: space-evenly;
     }
 </style>

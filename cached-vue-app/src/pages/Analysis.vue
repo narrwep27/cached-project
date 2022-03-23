@@ -1,9 +1,13 @@
 <template>
     <div class="page analysis-comp">
-        <h2>Monthly Spending</h2>
-        <LineGraph />
-        <h2>Expenses by Tag</h2>
-        <TagChart />
+        <div>
+            <h2>Total Spent each Month</h2>
+            <LineGraph />
+        </div>
+        <div>
+            <h2>Total Spent by Tag</h2>
+            <TagChart />
+        </div>
     </div>
 </template>
 
