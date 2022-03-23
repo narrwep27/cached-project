@@ -77,7 +77,7 @@ export default {
                     this.monthlyTotals[`${monthStr} ${i}`] = 0
                 }
             }
-        }
+        },
     }
 }
 </script>
