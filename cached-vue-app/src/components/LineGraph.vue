@@ -19,62 +19,69 @@ export default {
         getInitialDates() {
             const end = new Date()
             this.endDate = {
-                month: end.getMonth(),
+                month: end.getMonth() + 1,
                 year: end.getFullYear()
             }
-            const start = new Date(this.endDate.year, this.endDate.month - 5)
+            const start = new Date(this.endDate.year, this.endDate.month - 6)
             this.startDate = {
-                month: start.getMonth(),
+                month: start.getMonth() + 1,
                 year: start.getFullYear()
             }
         },
         getMonthlyTotals() {
             for (let i = this.startDate.year; i <= this.endDate.year; i++) {
-                let endMonth = i === this.endDate.year ? this.endDate.month : 11
-                let startMonth = i === this.startDate.year ? this.startDate.month: 0
+                let endMonth = i === this.endDate.year ? this.endDate.month : 12
+                let startMonth = i === this.startDate.year ? this.startDate.month: 1
                 for (let j = startMonth; j <= endMonth; j++) {
-                    let monthStr;
+                    let monthStr = j < 10 ? `0${j}` : `${j}`
+                    let allMonthCosts = this.$store.state.expenses.filter((exp) => {
+                        return exp.date.slice(0,7) === `${i}-${monthStr}`
+                    }).map(filteredExp => parseFloat(filteredExp.cost))
+                    let monthName;
                     switch (j) {
-                        case 0:
-                            monthStr = "Jan"
-                            break
                         case 1:
-                            monthStr = "Feb"
+                            monthName = "Jan"
                             break
                         case 2:
-                            monthStr = "Mar"
+                            monthName = "Feb"
                             break
                         case 3:
-                            monthStr = "Apr"
+                            monthName = "Mar"
                             break
                         case 4:
-                            monthStr = "May"
+                            monthName = "Apr"
                             break
                         case 5:
-                            monthStr = "Jun"
+                            monthName = "May"
                             break
                         case 6:
-                            monthStr = "Jul"
+                            monthName = "Jun"
                             break
                         case 7:
-                            monthStr = "Aug"
+                            monthName = "Jul"
                             break
                         case 8:
-                            monthStr = "Sep"
+                            monthName = "Aug"
                             break
                         case 9:
-                            monthStr = "Oct"
+                            monthName = "Sep"
                             break
                         case 10:
-                            monthStr = "Nov"
+                            monthName = "Oct"
                             break
                         case 11:
-                            monthStr = "Dec"
+                            monthName = "Nov"
+                            break
+                        case 12:
+                            monthName = "Dec"
                             break
                         default:
-                            monthStr = null
+                            monthName = null
                     }
-                    this.monthlyTotals[`${monthStr} ${i}`] = 0
+                    this.monthlyTotals[`${monthName} ${i}`] = 
+                        allMonthCosts.reduce((acc, val) => {
+                            return acc += val
+                        }, 0)
                 }
             }
         },
