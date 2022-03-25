@@ -57,7 +57,7 @@ export default {
             if (this.email && this.password && this.reEntry) {
                 if (this.password === this.reEntry) {
                     const res = await Register({
-                        email: this.email, 
+                        email: this.email.toLowerCase(), 
                         password:this.password
                     })
                     if (res.email) {

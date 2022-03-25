@@ -1,8 +1,14 @@
 <template>
     <div class='lineGraph-comp'>
-        <line-chart :data="monthlyTotals" 
+        <select class="lineGraph-date-select" title="lineGraph-date-select" v-model="rangeLength" v-on:change="getDateRange">
+            <option value="6">Past 6 Months</option>
+            <option value="9">Past 9 Months</option>
+            <option value="12">Past 1 year</option>
+        </select>
+        <line-chart 
+            :data="monthlyTotals" 
             class="lineGraph-graph"
-            width="60%"
+            width="90%"
             :curve="false"
             prefix="$"
             thousands=","
@@ -16,26 +22,28 @@ export default {
     data: () => ({
         startDate: {},
         endDate: {},
-        monthlyTotals: {}
+        monthlyTotals: {},
+        rangeLength: "6"
     }),
     beforeMount() {
-        this.getInitialDates()
-        this.getMonthlyTotals()
+        this.getDateRange()
     },
     methods: {
-        getInitialDates() {
+        getDateRange() {
             const end = new Date()
-            const start = new Date(this.endDate.year, this.endDate.month - 6)
             this.endDate = {
                 month: end.getMonth() + 1,
                 year: end.getFullYear()
             }
+            const start = new Date(this.endDate.year, this.endDate.month - parseInt(this.rangeLength))
             this.startDate = {
                 month: start.getMonth() + 1,
                 year: start.getFullYear()
             }
+            this.getMonthlyTotals()
         },
         getMonthlyTotals() {
+            this.monthlyTotals = {}
             for (let i = this.startDate.year; i <= this.endDate.year; i++) {
                 let endMonth = i === this.endDate.year ? this.endDate.month : 12
                 let startMonth = i === this.startDate.year ? this.startDate.month: 1
@@ -99,6 +107,15 @@ export default {
 <style scoped>
     .lineGraph-comp {
         display: flex;
-        justify-content: space-evenly;
+        flex-direction: column;
+        gap: 1em;
+        align-items: center;
+    }
+    .lineGraph-date-select {
+        align-self: start;
+        margin: 0 10%;
+    }
+    .lineGraph-graph {
+        justify-self: center;
     }
 </style>

@@ -1,10 +1,10 @@
 <template>
     <div class="page analysis-comp">
-        <div>
+        <div class="analysis-lineGraph-div">
             <h2>Total Spent each Month</h2>
             <LineGraph />
         </div>
-        <div>
+        <div class="analysis-tagChart-div">
             <h2>Total Spent by Tag</h2>
             <TagChart />
         </div>
@@ -49,3 +49,12 @@ export default {
     }
 }
 </script>
+
+<style scoped>
+    .analysis-lineGraph-div {
+        margin: 2em 8%;
+    }
+    .analysis-tagChart-div {
+        margin: 2em;
+    }
+</style>
