@@ -32,7 +32,7 @@ export default {
         async handleLogin() {
             if (this.email && this.password) {
                 const res = await Login({
-                    email: this.email,
+                    email: this.email.toLowerCase(),
                     password: this.password
                 });
                 if (res.user_id) {

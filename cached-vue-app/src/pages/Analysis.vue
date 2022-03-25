@@ -1,45 +1,32 @@
 <template>
     <div class="page analysis-comp">
-        <h2>Expense Analysis</h2>
-        <column-chart 
-            :data="tagExpenses" 
-            class="column-chart"
-            width="80%"
-        />
-        <br />
-        <pie-chart 
-            :data="tagExpenses" 
-            class="pie-chart"
-        />
+        <div class="analysis-lineGraph-div">
+            <h2>Total Spent each Month</h2>
+            <LineGraph />
+        </div>
+        <div class="analysis-tagChart-div">
+            <h2>Total Spent by Tag</h2>
+            <TagChart />
+        </div>
     </div>
 </template>
 
 <script>
-import { VerifyToken } from '../services/CustomUser';
+import { VerifyToken } from '../services/CustomUser'
+import TagChart from "../components/TagChart.vue"
+import LineGraph from "../components/LineGraph.vue"
 
 export default {
     name: 'Analysis',
-    data: () => ({
-        tagExpenses: []
-    }),
+    components: {
+        TagChart,
+        LineGraph
+    },
+    data: () => ({}),
     async beforeMount() {
         await this.checkToken();
-        this.getTagExpenses();
     },
     methods: {
-        getTagExpenses() {
-            let dataObj = {}
-            this.$store.state.tags.forEach((tag) => {
-                let totalCost = 0;
-                this.$store.state.expenses.forEach((exp) => {
-                    if (exp.tag === tag.id) {
-                        totalCost = totalCost + parseInt(exp.cost);
-                    }
-                });
-                dataObj[tag.name] = totalCost;
-            });
-            this.tagExpenses = dataObj;
-        },
         async checkToken() {
             if (localStorage.getItem('accessToken')) {
                 const res = await VerifyToken(localStorage.getItem('accessToken'));
@@ -64,10 +51,10 @@ export default {
 </script>
 
 <style scoped>
-    .column-chart {
-        margin: 1em auto;
-        background-color: white;
-        border: 1px solid #c0d7ee;
-        border-radius: 5px;
+    .analysis-lineGraph-div {
+        margin: 2em 8%;
+    }
+    .analysis-tagChart-div {
+        margin: 2em;
     }
 </style>

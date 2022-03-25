@@ -53,7 +53,8 @@ export default {
         DeleteEmptyOutline
     },
     props: {
-        expense: Object
+        expense: Object,
+        filteredExpenses: Array
     },
     data: () => ({
         dateString: '',
@@ -124,12 +125,14 @@ export default {
             this.expenseEdit.tag = null;
             this.expenseEdit.cost = null;
             this.editDivClass = "expense-item-edit-div-hide";
+            this.$emit('filterExpenses');
             this.infoEditConfirm();
         },
         async eraseExpense() {
             await DeleteExpense(this.expense.id);
             let newExpenses = this.$store.state.expenses.filter(exp => exp.id !== this.expense.id);
             this.$store.commit('setExpenses', newExpenses);
+            this.$emit('filterExpenses');
             this.infoDeleteConfirm();
         }
     }
