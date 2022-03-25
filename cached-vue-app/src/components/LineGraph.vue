@@ -1,8 +1,15 @@
 <template>
     <div class='lineGraph-comp'>
+        <form class="lineGraph-form">
+            <select>
+                <option value="6">Past 6 Months</option>
+                <option value="9">Past 9 Months</option>
+                <option value="12">Past 1 year</option>
+            </select>
+        </form>
         <line-chart :data="monthlyTotals" 
             class="lineGraph-graph"
-            width="60%"
+            width="90%"
             :curve="false"
             prefix="$"
             thousands=","
@@ -98,7 +105,15 @@ export default {
 
 <style scoped>
     .lineGraph-comp {
-        display: flex;
-        justify-content: space-evenly;
+        display: grid;
+        grid-template-columns: 20% 80%;
+        align-items: center;
+    }
+    .lineGraph-form {
+        justify-self: end;
+        margin: 0;
+    }
+    .lineGraph-graph {
+        justify-self: center;
     }
 </style>
